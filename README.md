@@ -1,7 +1,7 @@
 # \[bpr871\]
 
 **Group members:**
-- Sissel Andersen
+- Sissel Marie Andersen (bpr871)
 
 This repository contains  
 1. Inaugural project. 
