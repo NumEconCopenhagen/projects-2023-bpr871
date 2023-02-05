@@ -1,9 +1,7 @@
-# \[Group name\]
+# \[bpr871\]
 
 **Group members:**
-- A
-- B
-- C
+- Sissel Andersen
 
 This repository contains  
 1. Inaugural project. 
