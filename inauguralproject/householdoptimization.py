@@ -74,7 +74,7 @@ class HouseholdOptimizationClass:
         TF = LF+HF
         disutility = par.nu*(TM**epsilon_/epsilon_+TF**epsilon_/epsilon_)
 
-        return utility - disutility 
+        return  utility - disutility 
     
     def solve_discrete(self,do_print=False):
         """ solve model discretely """
@@ -93,7 +93,7 @@ class HouseholdOptimizationClass:
         HF = HF.ravel()
 
         # b. utility
-        u = self.utility(LM,HM,LF,HF)
+        u = self.utility(self,LM,HM,LF,HF)
 
         # c. if T > 24 return minus infinity (constraint broken)
         I = (LM+HM > 24) | (LF+HF > 24) 
@@ -114,8 +114,66 @@ class HouseholdOptimizationClass:
         
         return opt
 
-    #def solve_cont(self,do_print=False):
-    #""" solving the model continously """
+    def solve_cont(self,do_print=False):
+    
+        par = self.par
+        sol = self.sol
+        opt = SimpleNamespace()
+
+        # a. objective function (to minimize) 
+        #LM =  None
+        #HM =  None
+        #LF =  None
+        #HF =  None
+
+        # obj = lambda LM, HM, LF, HF: -self.utility(self, LM,HM,LF,HF) # minimize -> negtive of utility
+            
+        def objective(x):
+            return -self.utility(*x)    
+        # d. constraints and bounds: if T > 24 return minus infinity (constraint broken)
+        
+        
+        budget_constraint = lambda LM, HM, LF, HF: (LM+HM > 24) | (LF+HF > 24)  # violated if negative
+        
+        constraints = ({'type':'ineq','fun':budget_constraint})
+        
+        bounds = ((1e-8,24-1e-8),(1e-8,24-1e-8), (1e-8,24-1e-8),(1e-8,24-1e-8))
+        
+        # c. call solver
+        x0 = [2,2,2,2]
+        #method='SLSQP',bounds=bounds,constraints=constraints
+        result = optimize.minimize(objective,x0)
+
+        return result
+
+
+        """
+        # f. save the results
+        LM = sol.LM = result.x[1]
+        HM = sol.HM = result.x[2]
+        LF = sol.LF = result.x[3]
+        HF = sol.HF = result.x[3]
+
+        # e. print ? does the dictionary need to be pre-defined ? 
+        #if do_print:
+        #    for k,v in opt.__dict__.items():
+        #        print(f'{k} = {v:6.4f}')
+        
+        return result   
+        
+        # a. objective function (to minimize) 
+        #obj = lambda x: -model.utility(x[0],x[1]) # minimize -> negtive of utility
+            
+        # b. constraints and bounds
+        #budget_constraint = lambda x: par.m-par.p1*x[0]-par.p2*x[1] # violated if negative
+        #constraints = ({'type':'ineq','fun':budget_constraint})
+        #bounds = ((1e-8,par.m/par.p1-1e-8),(1e-8,par.m/par.p2-1e-8))
+        # d. save
+        #sol.x1 = result.x[0]
+        #sol.x2 = result.x[1]
+        #sol.u = model.u_func(sol.x1,sol.x2)
+        """
+
 
             
 

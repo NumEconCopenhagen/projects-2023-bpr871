@@ -15,18 +15,22 @@ import matplotlib.pyplot as plt # baseline module
 plt.rcParams.update({"axes.grid":True,"grid.color":"black","grid.alpha":"0.25","grid.linestyle":"-"})
 plt.rcParams.update({'font.size': 14})
 
-# a. create the figure
-fig = plt.figure()
+def plot_Q1():
+    # a. create the figure
+    fig = plt.figure()
 
-# b. plot
-ax = fig.add_subplot(1,1,1)
+    # b. plot
+    ax = fig.add_subplot(1,1,1)
 
-ratio = HF/HM # where do we put the definition of ratio?
-ax.plot(ratio,alpha) # where do we put input of alphas?
+    ax.plot(HM_vec,HF_vec) 
 
-ax.set_title('Household hours ratio, $\frac{HF}{HM}$')
-ax.set_xlabel('$\alpha$')
-ax.set_ylabel('$\frac{HF}{HM}$')
+    #label for alpha-values?
+
+    ax.set_title('Household hours ratio, $\frac{HF}{HM}$')
+    ax.set_xlabel('$HM$')
+    ax.set_ylabel('$HF$')
+
+
 
 
 
