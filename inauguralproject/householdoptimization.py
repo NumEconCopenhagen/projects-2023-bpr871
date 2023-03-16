@@ -131,11 +131,17 @@ class HouseholdOptimizationClass:
         
         # c. call solver
         x0 = [2,2,2,2]
-        #method='SLSQP',bounds=bounds,constraints=constraints
-        result = optimize.minimize(objective,x0)
+        result = optimize.minimize(objective,x0)  #method='SLSQP',bounds=bounds,constraints=constraints
 
-        return result
 
+        # d. unpack variables
+        LM = result.x[0]
+        LF = result.x[1]
+        HM = result.x[2]
+        HF = result.x[3]
+
+        return LM, LF, HM, HF
+        # return result
 
         """
         # f. save the results
