@@ -61,18 +61,19 @@ class HouseholdOptimizationClass:
         elif par.sigma == 1:
             H = HM**(1-par.alpha)*HF**par.alpha
         else:
-            ((1-par.alpha)*HM**((par.sigma-1)/(par.sigma))
-            + par.alpha*HF**((par.sigma-1)/(par.sigma)))**((par.sigma)/(par.sigma-1))
+            H = ((1-par.alpha)*HM**((par.sigma-1)/(par.sigma + 1e-8))
+            + par.alpha*HF**((par.sigma-1)/(par.sigma + 1e-8)))**((par.sigma)/(par.sigma-1 + 1e-8))
+
 
         # c. total consumption utility
         Q = C**par.omega*H**(1-par.omega)
-        utility = np.fmax(Q,1e-8)**(1-par.rho)/(1-par.rho)
+        utility = np.fmax(Q,1e-8)**(1-par.rho)/(1-par.rho + 1e-8)
 
         # d. disutility of work
-        epsilon_ = 1+1/par.epsilon # shorten function?
+        epsilon_ = 1+1/(par.epsilon + 1e-8) # to shorten the function
         TM = LM+HM
         TF = LF+HF
-        disutility = par.nu*(TM**epsilon_/epsilon_+TF**epsilon_/epsilon_)
+        disutility = par.nu*(TM**epsilon_/(epsilon_+ 1e-8)+TF**epsilon_/(epsilon_+ 1e-8))
 
         return  utility - disutility 
     
@@ -93,7 +94,7 @@ class HouseholdOptimizationClass:
         HF = HF.ravel()
 
         # b. utility
-        u = self.utility(self,LM,HM,LF,HF)
+        u = self.utility(LM,HM,LF,HF)
 
         # c. if T > 24 return minus infinity (constraint broken)
         I = (LM+HM > 24) | (LF+HF > 24) 
