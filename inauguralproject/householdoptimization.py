@@ -169,6 +169,54 @@ class HouseholdOptimizationClass:
         #sol.x2 = result.x[1]
         #sol.u = model.u_func(sol.x1,sol.x2)
         """
+   
+    def ratios(self):
+        sol = self.sol
+
+
+        sol.HM_wage_vec = ()
+        sol.HF_wage_vec = ()
+        wF = (0.8, 0.9, 1.0, 1.1, 1.2)
+
+
+        # b. for loop
+        for wages in wF:
+            par.wF = wages
+            sol.solution_wage.append(self.solve_cont())
+            
+        #c. extracting results
+        sol.HF_wage_vec = [ns[3] for ns in sol.solution_wage]
+        sol.HM_wage_vec = [ns[2] for ns in sol.solution_wage]
+
+        sol.ratio_H = [np.log(a/b) for a, b in zip(sol.HF_wage_vec, sol.HM_wage_vec)]
+        sol.ratio_w = np.log(wF)    
+
+    def solve_beta(self, do_print=False):
+
+        par = self.par
+        sol = self.sol
+        opt = SimpleNamespace()
+
+        def reg(self): 
+             sol.ratio_H = 
+             sol.beta0 + sol.beta1 * sol.ratio_w
+             return sol.beta0, sol.beta1
+
+
+
+def sole_xyz(wm, wages):
+    def objective(alpha, sigma):
+        func = HouseholdOptimizationClass()
+        func.par.wF = wages
+        solution_wage = func.solve_cont()
+        ratios = func.ratios()
+        def beta_var(self, ):
+            variance = (par.beta0_target - sol.beta0)**2+(par.beta1_target - sol.beta1)**2
+        return beta_var()
+
+
+
+
 
 
             
