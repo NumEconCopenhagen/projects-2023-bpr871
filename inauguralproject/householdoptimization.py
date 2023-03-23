@@ -2,6 +2,7 @@ from types import SimpleNamespace
 
 import numpy as np
 from scipy import optimize
+import scipy.stats as stats
 
 import pandas as pd 
 import matplotlib.pyplot as plt
@@ -172,15 +173,16 @@ class HouseholdOptimizationClass:
    
     def ratios(self):
         sol = self.sol
-
+        par = self.par
 
         sol.HM_wage_vec = ()
         sol.HF_wage_vec = ()
-        wF = (0.8, 0.9, 1.0, 1.1, 1.2)
+        sol.solution_wage = []
+        par.wF_list = (0.8, 0.9, 1.0, 1.1, 1.2)
 
 
         # b. for loop
-        for wages in wF:
+        for wages in par.wF_list:
             par.wF = wages
             sol.solution_wage.append(self.solve_cont())
             
@@ -189,30 +191,43 @@ class HouseholdOptimizationClass:
         sol.HM_wage_vec = [ns[2] for ns in sol.solution_wage]
 
         sol.ratio_H = [np.log(a/b) for a, b in zip(sol.HF_wage_vec, sol.HM_wage_vec)]
-        sol.ratio_w = np.log(wF)    
+        sol.ratio_w = np.log(par.wF_list)    
 
-    def solve_beta(self, do_print=False):
+    def regress(self):
+        sol = self.sol
+        par = self.par
 
+        self.ratios()
+        slope, intercept, r_value, p_value, std_err = stats.linregress(sol.ratio_w, sol.ratio_H)
+        sol.beta0 = intercept
+        sol.beta1 = slope  
+
+    def target(self):
+        sol = self.sol
+        par = self.par
+
+        sol.objective_var = (par.beta0_target - sol.beta0)**2+(par.beta1_target - sol.beta1)**2        
+        return sol.objective_var
+    
+    def min_variance(self, sol.objective_var):
+        sol = self.sol
+        par = self.par
+
+        # Define alpha and sigma as endogenous inputs
+        par.alpha = 
+        par.sigma = 
+        x0[2,2]
+        result = optimize.minimize(sol.objective_var,x0) 
+
+    def extension(self,LM,HM,LF,HF,mu):
         par = self.par
         sol = self.sol
-        opt = SimpleNamespace()
 
-        def reg(self): 
-             sol.ratio_H = 
-             sol.beta0 + sol.beta1 * sol.ratio_w
-             return sol.beta0, sol.beta1
+        # Optimize over mu to implement the target parameters when alpha = 0.5
+        disutility = self.nu*((mu*LM + HM)**self.epsilon_/(self.epsilon_+ 1e-8)+(LF + HF)**self.epsilon_/(self.epsilon_+ 1e-8))
 
+        return  self.utility() - disutility 
 
-
-def sole_xyz(wm, wages):
-    def objective(alpha, sigma):
-        func = HouseholdOptimizationClass()
-        func.par.wF = wages
-        solution_wage = func.solve_cont()
-        ratios = func.ratios()
-        def beta_var(self, ):
-            variance = (par.beta0_target - sol.beta0)**2+(par.beta1_target - sol.beta1)**2
-        return beta_var()
 
 
 
