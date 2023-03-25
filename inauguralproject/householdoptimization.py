@@ -46,10 +46,24 @@ class HouseholdOptimizationClass:
         sol.beta1 = np.nan
 
     def utility(self,LM,HM,LF,HF):
-        """ calculating utility 
-        args: self, LM, HM, LF, HF
-        tilføj?"""
+        """
+        This function calculates the utility of the household. 
 
+        Args:
+            The inputs for the utility function consists of: 
+
+                - HM: Hours worked in household for male agent.
+                - LM: Hours worked in the market for male agent.
+                - HF: Hours worked in household for female agent.
+                - LF: Hours worked in the market for female agent. 
+
+        Utility is calculated using labor hours as well as consumption. 
+        Only labor hours in the market can be converted in to consumption. 
+
+        Returns:
+            utility - disutility: Returns net utility of the household as a whole.
+        """
+        
         par = self.par
         sol = self.sol
 
@@ -79,10 +93,16 @@ class HouseholdOptimizationClass:
         return  utility - disutility 
     
     def solve_discrete(self,do_print=False):
-        """ solve model discretely """
+        """
+        This function solves the maximization problem of the household discretely.
 
-        par = self.par
-        sol = self.sol
+        Utility is calculated using labor hours as well as consumption. 
+        Only labor hours in the market can be converted in to consumption. 
+
+        Returns:
+            (LM, HM, LF, HF): Returns a NameSpace containing solutions to the discrete maximization problem. 
+        """
+
         opt = SimpleNamespace()
 
         # a. possible choices of labor
@@ -104,132 +124,102 @@ class HouseholdOptimizationClass:
         # d. find maximizing argument for endogenous variables
         j = np.argmax(u)
         
-        opt.LM = LM[j] #from unravel function ?
+        opt.LM = LM[j] 
         opt.HM = HM[j]
         opt.LF = LF[j]
         opt.HF = HF[j]
 
-        # e. print ? does the dictionary need to be pre-defined ? 
+        # e. print 
         if do_print:
             for k,v in opt.__dict__.items():
                 print(f'{k} = {v:6.4f}')
         
         return opt
 
-    def solve_cont(self,do_print=False):
+    def solve(self,do_print=False):
+        """
+        This function solves the maximization problem of the household continuously.
+
+        Utility is calculated using labor hours as well as consumption. 
+        Only labor hours in the market can be converted in to consumption. 
+
+        Returns:
+            LM, HM, LF, HF: Returns the four solutions to the continuous maximization problem. 
+        """
     
-        par = self.par
-        sol = self.sol
-        opt = SimpleNamespace()
+        #par = self.par
+        #sol = self.sol
+        #opt = SimpleNamespace()
 
         def objective(x):
             return -self.utility(*x)    
         
         # d. constraints and bounds: if T > 24 return minus infinity (constraint broken)
-        budget_constraint = lambda LM, HM, LF, HF: (LM+HM > 24) | (LF+HF > 24)  # violated if negative
-        constraints = ({'type':'ineq','fun':budget_constraint})
-        bounds = ((1e-8,24-1e-8),(1e-8,24-1e-8), (1e-8,24-1e-8),(1e-8,24-1e-8))
+        #budget_constraint = lambda LM, HM, LF, HF: (LM+HM > 24) | (LF+HF > 24)  # violated if negative
+        #constraints = ({'type':'ineq','fun':budget_constraint})
+        bounds = [(1e-8,24-1e-8),(1e-8,24-1e-8), (1e-8,24-1e-8),(1e-8,24-1e-8)]
         
         # c. call solver
         x0 = [2,2,2,2]
-        result = optimize.minimize(objective,x0)  #method='SLSQP',bounds=bounds,constraints=constraints
-
+        result = optimize.minimize(objective,x0, method='SLSQP', bounds = bounds)  #method='SLSQP',bounds=bounds,constraints=constraints
 
         # d. unpack variables
         LM = result.x[0]
-        LF = result.x[1]
-        HM = result.x[2]
+        HM = result.x[1]
+        LF = result.x[2]
         HF = result.x[3]
 
-        return LM, LF, HM, HF
-        # return result
-
-        """
-        # f. save the results
-        LM = sol.LM = result.x[1]
-        HM = sol.HM = result.x[2]
-        LF = sol.LF = result.x[3]
-        HF = sol.HF = result.x[3]
-
-        # e. print ? does the dictionary need to be pre-defined ? 
-        #if do_print:
-        #    for k,v in opt.__dict__.items():
-        #        print(f'{k} = {v:6.4f}')
-        
-        return result   
-        
-        # a. objective function (to minimize) 
-        #obj = lambda x: -model.utility(x[0],x[1]) # minimize -> negtive of utility
-            
-        # b. constraints and bounds
-        #budget_constraint = lambda x: par.m-par.p1*x[0]-par.p2*x[1] # violated if negative
-        #constraints = ({'type':'ineq','fun':budget_constraint})
-        #bounds = ((1e-8,par.m/par.p1-1e-8),(1e-8,par.m/par.p2-1e-8))
-        # d. save
-        #sol.x1 = result.x[0]
-        #sol.x2 = result.x[1]
-        #sol.u = model.u_func(sol.x1,sol.x2)
-        """
+        return LM, HM, LF, HF
    
-    def ratios(self):
+    def get_ratios(self):
+        """
+        This function return the solution of the household maximization problem over a loop of values of wF. 
+
+        Args:
+            Parameters of the class.
+
+        The function inputs a vector of values for wF in to the solve function and returns a vector of results. 
+        Results and inputs are calculated as a log of the ratio between the value of the male and female agent (HF/HM), (wF/wM). 
+
+        Returns:
+            ratio_H, ratio_w.
+        """
         sol = self.sol
         par = self.par
 
-        sol.HM_wage_vec = ()
-        sol.HF_wage_vec = ()
+        sol.HM_wage_vec = []
+        sol.HF_wage_vec = []
         sol.solution_wage = []
         par.wF_list = (0.8, 0.9, 1.0, 1.1, 1.2)
 
 
         # b. for loop
-        #for wages in par.wF_list:
-        #    par.wF = wages
-        #    sol.solution_wage.append(self.solve_cont())
         for wages in par.wF_list:
             par.wF = wages
-            _, _, HM, HF = self.solve_cont()
+            _, _, HM, HF = self.solve()
             sol.HM_wage_vec.append(HM)
             sol.HF_wage_vec.append(HF)
-
-
             
         #c. extracting results
-        sol.HF_wage_vec = [ns[3] for ns in sol.solution_wage]
-        sol.HM_wage_vec = [ns[2] for ns in sol.solution_wage]
+        #sol.HF_wage_vec = [ns[3] for ns in sol.solution_wage]
+        #sol.HM_wage_vec = [ns[2] for ns in sol.solution_wage]
 
-        sol.ratio_H = [np.log(a/b) for a, b in zip(sol.HF_wage_vec, sol.HM_wage_vec)]
-        sol.ratio_w = np.log(par.wF_list)    
+        ratio_H = [np.log(a/b) for a, b in zip(sol.HF_wage_vec, sol.HM_wage_vec)]
+        ratio_w = np.log(par.wF_list)    
 
+        return ratio_H, ratio_w
+
+"""    
     def regress(self):
         sol = self.sol
-        par = self.par
 
         self.ratios()
-        slope, intercept, r_value, p_value, std_err = stats.linregress(sol.ratio_w, sol.ratio_H)
+        slope, intercept, _, _, _ = stats.linregress(sol.ratio_w, sol.ratio_H)
         sol.beta0 = intercept
         sol.beta1 = slope  
 """
-    def target(self):
-        sol = self.sol
-        par = self.par
 
-        sol.objective_var = (par.beta0_target - sol.beta0)**2+(par.beta1_target - sol.beta1)**2        
-        return sol.objective_var
-    
-
-
-
-
-    def min_variance(self, sol.objective_var):
-        sol = self.sol
-        par = self.par
-
-        # Define alpha and sigma as endogenous inputs
-        par.alpha = 
-        par.sigma = 
-        x0[2,2]
-        result = optimize.minimize(sol.objective_var,x0) 
-
+"""
     def extension(self,LM,HM,LF,HF,mu):
         par = self.par
         sol = self.sol
