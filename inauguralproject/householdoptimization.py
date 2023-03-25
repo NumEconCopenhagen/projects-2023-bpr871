@@ -62,8 +62,8 @@ class HouseholdOptimizationClass:
         elif par.sigma == 1:
             H = HM**(1-par.alpha)*HF**par.alpha
         else:
-            H = ((1-par.alpha)*HM**((par.sigma-1)/(par.sigma + 1e-8))
-            + par.alpha*HF**((par.sigma-1)/(par.sigma + 1e-8)))**((par.sigma)/(par.sigma-1 + 1e-8))
+            # Fejl med to linjer?
+            H = ((1-par.alpha)*HM**((par.sigma-1)/(par.sigma + 1e-8)) + par.alpha*HF**((par.sigma-1)/(par.sigma + 1e-8)))**((par.sigma)/(par.sigma-1 + 1e-8))
 
 
         # c. total consumption utility
@@ -182,9 +182,16 @@ class HouseholdOptimizationClass:
 
 
         # b. for loop
+        #for wages in par.wF_list:
+        #    par.wF = wages
+        #    sol.solution_wage.append(self.solve_cont())
         for wages in par.wF_list:
             par.wF = wages
-            sol.solution_wage.append(self.solve_cont())
+            _, _, HM, HF = self.solve_cont()
+            sol.HM_wage_vec.append(HM)
+            sol.HF_wage_vec.append(HF)
+
+
             
         #c. extracting results
         sol.HF_wage_vec = [ns[3] for ns in sol.solution_wage]
@@ -201,7 +208,7 @@ class HouseholdOptimizationClass:
         slope, intercept, r_value, p_value, std_err = stats.linregress(sol.ratio_w, sol.ratio_H)
         sol.beta0 = intercept
         sol.beta1 = slope  
-
+"""
     def target(self):
         sol = self.sol
         par = self.par
@@ -209,6 +216,10 @@ class HouseholdOptimizationClass:
         sol.objective_var = (par.beta0_target - sol.beta0)**2+(par.beta1_target - sol.beta1)**2        
         return sol.objective_var
     
+
+
+
+
     def min_variance(self, sol.objective_var):
         sol = self.sol
         par = self.par
@@ -227,7 +238,7 @@ class HouseholdOptimizationClass:
         disutility = self.nu*((mu*LM + HM)**self.epsilon_/(self.epsilon_+ 1e-8)+(LF + HF)**self.epsilon_/(self.epsilon_+ 1e-8))
 
         return  self.utility() - disutility 
-
+"""
 
 
 
