@@ -136,7 +136,7 @@ class HouseholdOptimizationClass:
         
         return opt
 
-    def solve(self,do_print=False):
+    def solve(self):
         """
         This function solves the maximization problem of the household continuously.
 
@@ -209,17 +209,6 @@ class HouseholdOptimizationClass:
 
         return ratio_H, ratio_w
 
-"""    
-    def regress(self):
-        sol = self.sol
-
-        self.ratios()
-        slope, intercept, _, _, _ = stats.linregress(sol.ratio_w, sol.ratio_H)
-        sol.beta0 = intercept
-        sol.beta1 = slope  
-"""
-
-"""
     def extension(self,LM,HM,LF,HF,mu):
         par = self.par
         sol = self.sol
@@ -228,7 +217,7 @@ class HouseholdOptimizationClass:
         disutility = self.nu*((mu*LM + HM)**self.epsilon_/(self.epsilon_+ 1e-8)+(LF + HF)**self.epsilon_/(self.epsilon_+ 1e-8))
 
         return  self.utility() - disutility 
-"""
+
 
 
 
