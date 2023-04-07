@@ -71,12 +71,12 @@ class HouseholdOptimizationClass:
         C = par.wM*LM + par.wF*LF
 
         # b. home production
-        if par.sigma == 0:
+        if np.isclose(par.sigma, 0, atol=1e-08, equal_nan=False):
             H = min(HM,HF)
-        elif par.sigma == 1:
+        elif np.isclose(par.sigma, 1, atol=1e-08, equal_nan=False):
+        #par.sigma == 1:
             H = HM**(1-par.alpha)*HF**par.alpha
         else:
-            # Fejl med to linjer?
             H = ((1-par.alpha)*HM**((par.sigma-1)/(par.sigma + 1e-8)) + par.alpha*HF**((par.sigma-1)/(par.sigma + 1e-8)))**((par.sigma)/(par.sigma-1 + 1e-8))
 
 
@@ -161,7 +161,7 @@ class HouseholdOptimizationClass:
         
         # c. call solver
         x0 = [2,2,2,2]
-        result = optimize.minimize(objective,x0, method='SLSQP', bounds = bounds)  #method='SLSQP',bounds=bounds,constraints=constraints
+        result = optimize.minimize(objective,x0, method='Nelder-Mead', bounds = bounds)  #method='SLSQP',bounds=bounds,constraints=constraints
 
         # d. unpack variables
         LM = result.x[0]
@@ -196,9 +196,16 @@ class HouseholdOptimizationClass:
         # b. for loop
         for wages in par.wF_list:
             par.wF = wages
-            _, _, HM, HF = self.solve()
+            LM, HM, LF, HF = self.solve()
+                
+            #extracting results
             sol.HM_wage_vec.append(HM)
             sol.HF_wage_vec.append(HF)
+            
+            #test: assesing the values of HM, HF and the utility
+            #print(HM, HF)
+            #print(self.utility(LM, HM, LF, HF))
+
             
         #c. extracting results
         #sol.HF_wage_vec = [ns[3] for ns in sol.solution_wage]
