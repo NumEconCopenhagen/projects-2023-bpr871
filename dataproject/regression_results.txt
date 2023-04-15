@@ -1,25 +1,25 @@
 Regression Results for Educational level: 
                             OLS Regression Results                            
 ==============================================================================
-Dep. Variable:      Educational level   R-squared:                       0.001
+Dep. Variable:      Educational level   R-squared:                       0.000
 Model:                            OLS   Adj. R-squared:                 -0.004
-Method:                 Least Squares   F-statistic:                    0.1902
-Date:                Sat, 15 Apr 2023   Prob (F-statistic):              0.663
-Time:                        17:45:16   Log-Likelihood:                -71.082
-No. Observations:                 206   AIC:                             146.2
-Df Residuals:                     204   BIC:                             152.8
+Method:                 Least Squares   F-statistic:                    0.1196
+Date:                Sat, 15 Apr 2023   Prob (F-statistic):              0.730
+Time:                        20:48:48   Log-Likelihood:                -375.67
+No. Observations:                 243   AIC:                             755.3
+Df Residuals:                     241   BIC:                             762.3
 Df Model:                           1                                         
 Covariance Type:            nonrobust                                         
 ================================================================================
                    coef    std err          t      P>|t|      [0.025      0.975]
 --------------------------------------------------------------------------------
-const            0.2325      0.026      9.072      0.000       0.182       0.283
-D_rob_pr_ths     0.0003      0.001      0.436      0.663      -0.001       0.002
+const            0.4602      0.079      5.824      0.000       0.305       0.616
+D_rob_pr_ths    -0.0007      0.002     -0.346      0.730      -0.004       0.003
 ==============================================================================
-Omnibus:                       76.134   Durbin-Watson:                   1.838
-Prob(Omnibus):                  0.000   Jarque-Bera (JB):              270.856
-Skew:                           1.482   Prob(JB):                     1.53e-59
-Kurtosis:                       7.772   Cond. No.                         41.8
+Omnibus:                      257.371   Durbin-Watson:                   0.691
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):             6062.689
+Skew:                           4.544   Prob(JB):                         0.00
+Kurtosis:                      25.720   Cond. No.                         44.4
 ==============================================================================
 
 Notes:
@@ -27,25 +27,25 @@ Notes:
 Regression Results for It-Capital deepening: 
                              OLS Regression Results                             
 ================================================================================
-Dep. Variable:     It-Capital deepening   R-squared:                       0.004
-Model:                              OLS   Adj. R-squared:                 -0.001
-Method:                   Least Squares   F-statistic:                    0.8687
-Date:                  Sat, 15 Apr 2023   Prob (F-statistic):              0.352
-Time:                          17:45:16   Log-Likelihood:                -164.97
-No. Observations:                   206   AIC:                             333.9
-Df Residuals:                       204   BIC:                             340.6
+Dep. Variable:     It-Capital deepening   R-squared:                       0.001
+Model:                              OLS   Adj. R-squared:                 -0.003
+Method:                   Least Squares   F-statistic:                    0.2059
+Date:                  Sat, 15 Apr 2023   Prob (F-statistic):              0.650
+Time:                          20:48:48   Log-Likelihood:                -478.45
+No. Observations:                   243   AIC:                             960.9
+Df Residuals:                       241   BIC:                             967.9
 Df Model:                             1                                         
 Covariance Type:              nonrobust                                         
 ================================================================================
                    coef    std err          t      P>|t|      [0.025      0.975]
 --------------------------------------------------------------------------------
-const            0.2381      0.040      5.889      0.000       0.158       0.318
-D_rob_pr_ths     0.0010      0.001      0.932      0.352      -0.001       0.003
+const            0.5700      0.121      4.726      0.000       0.332       0.808
+D_rob_pr_ths    -0.0013      0.003     -0.454      0.650      -0.007       0.004
 ==============================================================================
-Omnibus:                       65.453   Durbin-Watson:                   1.289
-Prob(Omnibus):                  0.000   Jarque-Bera (JB):              153.564
-Skew:                           1.447   Prob(JB):                     4.51e-34
-Kurtosis:                       6.085   Cond. No.                         41.8
+Omnibus:                      281.920   Durbin-Watson:                   1.093
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):             9408.795
+Skew:                           5.094   Prob(JB):                         0.00
+Kurtosis:                      31.731   Cond. No.                         44.4
 ==============================================================================
 
 Notes:
@@ -53,25 +53,25 @@ Notes:
 Regression Results for Labour productivity: 
                              OLS Regression Results                            
 ===============================================================================
-Dep. Variable:     Labour productivity   R-squared:                       0.002
-Model:                             OLS   Adj. R-squared:                 -0.003
-Method:                  Least Squares   F-statistic:                    0.3562
-Date:                 Sat, 15 Apr 2023   Prob (F-statistic):              0.551
-Time:                         17:45:16   Log-Likelihood:                -865.07
-No. Observations:                  206   AIC:                             1734.
-Df Residuals:                      204   BIC:                             1741.
+Dep. Variable:     Labour productivity   R-squared:                       0.000
+Model:                             OLS   Adj. R-squared:                 -0.004
+Method:                  Least Squares   F-statistic:                   0.02352
+Date:                 Sat, 15 Apr 2023   Prob (F-statistic):              0.878
+Time:                         20:48:48   Log-Likelihood:                -1134.4
+No. Observations:                  243   AIC:                             2273.
+Df Residuals:                      241   BIC:                             2280.
 Df Model:                            1                                         
 Covariance Type:             nonrobust                                         
 ================================================================================
                    coef    std err          t      P>|t|      [0.025      0.975]
 --------------------------------------------------------------------------------
-const            3.1232      1.210      2.582      0.011       0.738       5.509
-D_rob_pr_ths     0.0185      0.031      0.597      0.551      -0.043       0.080
+const            7.3868      1.793      4.119      0.000       3.854      10.919
+D_rob_pr_ths    -0.0067      0.044     -0.153      0.878      -0.093       0.079
 ==============================================================================
-Omnibus:                       40.032   Durbin-Watson:                   2.249
-Prob(Omnibus):                  0.000   Jarque-Bera (JB):              100.669
-Skew:                           0.846   Prob(JB):                     1.38e-22
-Kurtosis:                       5.977   Cond. No.                         41.8
+Omnibus:                      217.500   Durbin-Watson:                   1.171
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):             4636.412
+Skew:                           3.492   Prob(JB):                         0.00
+Kurtosis:                      23.227   Cond. No.                         44.4
 ==============================================================================
 
 Notes:
@@ -79,25 +79,25 @@ Notes:
 Regression Results for Non IT-capital deepening: 
                                OLS Regression Results                               
 ====================================================================================
-Dep. Variable:     Non IT-capital deepening   R-squared:                       0.031
-Model:                                  OLS   Adj. R-squared:                  0.026
-Method:                       Least Squares   F-statistic:                     6.464
-Date:                      Sat, 15 Apr 2023   Prob (F-statistic):             0.0117
-Time:                              17:45:16   Log-Likelihood:                -602.57
-No. Observations:                       206   AIC:                             1209.
-Df Residuals:                           204   BIC:                             1216.
+Dep. Variable:     Non IT-capital deepening   R-squared:                       0.006
+Model:                                  OLS   Adj. R-squared:                  0.002
+Method:                       Least Squares   F-statistic:                     1.382
+Date:                      Sat, 15 Apr 2023   Prob (F-statistic):              0.241
+Time:                              20:48:48   Log-Likelihood:                -797.75
+No. Observations:                       243   AIC:                             1599.
+Df Residuals:                           241   BIC:                             1606.
 Df Model:                                 1                                         
 Covariance Type:                  nonrobust                                         
 ================================================================================
                    coef    std err          t      P>|t|      [0.025      0.975]
 --------------------------------------------------------------------------------
-const            1.0456      0.338      3.091      0.002       0.379       1.713
-D_rob_pr_ths     0.0221      0.009      2.542      0.012       0.005       0.039
+const            1.2004      0.449      2.675      0.008       0.316       2.084
+D_rob_pr_ths     0.0128      0.011      1.175      0.241      -0.009       0.034
 ==============================================================================
-Omnibus:                      130.986   Durbin-Watson:                   2.046
-Prob(Omnibus):                  0.000   Jarque-Bera (JB):             1149.126
-Skew:                           2.341   Prob(JB):                    2.95e-250
-Kurtosis:                      13.581   Cond. No.                         41.8
+Omnibus:                      146.871   Durbin-Watson:                   2.398
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):             1668.218
+Skew:                           2.161   Prob(JB):                         0.00
+Kurtosis:                      15.087   Cond. No.                         44.4
 ==============================================================================
 
 Notes:
@@ -105,25 +105,25 @@ Notes:
 Regression Results for Total factor productivity: 
                                 OLS Regression Results                               
 =====================================================================================
-Dep. Variable:     Total factor productivity   R-squared:                       0.000
-Model:                                   OLS   Adj. R-squared:                 -0.005
-Method:                        Least Squares   F-statistic:                   0.01638
-Date:                       Sat, 15 Apr 2023   Prob (F-statistic):              0.898
-Time:                               17:45:16   Log-Likelihood:                -857.27
-No. Observations:                        206   AIC:                             1719.
-Df Residuals:                            204   BIC:                             1725.
+Dep. Variable:     Total factor productivity   R-squared:                       0.001
+Model:                                   OLS   Adj. R-squared:                 -0.003
+Method:                        Least Squares   F-statistic:                    0.1839
+Date:                       Sat, 15 Apr 2023   Prob (F-statistic):              0.668
+Time:                               20:48:48   Log-Likelihood:                -1119.6
+No. Observations:                        243   AIC:                             2243.
+Df Residuals:                            241   BIC:                             2250.
 Df Model:                                  1                                         
 Covariance Type:                   nonrobust                                         
 ================================================================================
                    coef    std err          t      P>|t|      [0.025      0.975]
 --------------------------------------------------------------------------------
-const            1.6377      1.165      1.406      0.161      -0.659       3.934
-D_rob_pr_ths    -0.0038      0.030     -0.128      0.898      -0.063       0.055
+const            5.2458      1.687      3.109      0.002       1.922       8.570
+D_rob_pr_ths    -0.0176      0.041     -0.429      0.668      -0.098       0.063
 ==============================================================================
-Omnibus:                       23.067   Durbin-Watson:                   2.225
-Prob(Omnibus):                  0.000   Jarque-Bera (JB):               60.376
-Skew:                           0.443   Prob(JB):                     7.75e-14
-Kurtosis:                       5.500   Cond. No.                         41.8
+Omnibus:                      240.937   Durbin-Watson:                   1.289
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):             8631.489
+Skew:                           3.850   Prob(JB):                         0.00
+Kurtosis:                      31.164   Cond. No.                         44.4
 ==============================================================================
 
 Notes:
@@ -133,11 +133,11 @@ Summary of All Regression Models:
 ============================================================================================================================
                Educational level It-Capital deepening Labour productivity Non IT-capital deepening Total factor productivity
 ----------------------------------------------------------------------------------------------------------------------------
-const          0.23              0.24                 3.12                1.05                     1.64                     
-               (0.03)            (0.04)               (1.21)              (0.34)                   (1.16)                   
-D_rob_pr_ths   0.00              0.00                 0.02                0.02                     -0.00                    
-               (0.00)            (0.00)               (0.03)              (0.01)                   (0.03)                   
-R-squared      0.00              0.00                 0.00                0.03                     0.00                     
-R-squared Adj. -0.00             -0.00                -0.00               0.03                     -0.00                    
+const          0.46              0.57                 7.39                1.20                     5.25                     
+               (0.08)            (0.12)               (1.79)              (0.45)                   (1.69)                   
+D_rob_pr_ths   -0.00             -0.00                -0.01               0.01                     -0.02                    
+               (0.00)            (0.00)               (0.04)              (0.01)                   (0.04)                   
+R-squared      0.00              0.00                 0.00                0.01                     0.00                     
+R-squared Adj. -0.00             -0.00                -0.00               0.00                     -0.00                    
 ============================================================================================================================
 Standard errors in parentheses.
