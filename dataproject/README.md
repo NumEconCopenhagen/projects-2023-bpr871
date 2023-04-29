@@ -9,7 +9,3 @@ We apply the **following datasets**:
 1. NP25.csv (*[source](https://www.statistikbanken.dk/np25)*) 
 2. ifr_dk.csv (*source*)
 3. NABB69 from Danmarks Statestik https://www.statistikbanken.dk/np25
-
-**Dependencies:** Apart from a standard Anaconda Python 3 installation, the project requires the following installations:
-
-``pip install matplotlib-venn``
