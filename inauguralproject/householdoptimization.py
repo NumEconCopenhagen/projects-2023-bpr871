@@ -155,13 +155,13 @@ class HouseholdOptimizationClass:
             return -self.utility(*x)    
         
         # d. constraints and bounds: if T > 24 return minus infinity (constraint broken)
-        #budget_constraint = lambda LM, HM, LF, HF: (LM+HM > 24) | (LF+HF > 24)  # violated if negative
-        #constraints = ({'type':'ineq','fun':budget_constraint})
+        budget_constraint = lambda LM, HM, LF, HF: (LM+HM > 24) | (LF+HF > 24)  # violated if negative
+        constraints = ({'type':'ineq','fun':budget_constraint})
         bounds = [(1e-8,24-1e-8),(1e-8,24-1e-8), (1e-8,24-1e-8),(1e-8,24-1e-8)]
         
         # c. call solver
         x0 = [2,2,2,2]
-        result = optimize.minimize(objective,x0, method='Nelder-Mead', bounds = bounds)  #method='SLSQP',bounds=bounds,constraints=constraints
+        result = optimize.minimize(objective,x0, method='Nelder-Mead', bounds = bounds, constraints=constraints)  #method='SLSQP',bounds=bounds,
 
         # d. unpack variables
         LM = result.x[0]
@@ -203,8 +203,8 @@ class HouseholdOptimizationClass:
             sol.HF_wage_vec.append(HF)
             
             #test: assesing the values of HM, HF and the utility
-            #print(HM, HF)
-            #print(self.utility(LM, HM, LF, HF))
+            print(HM, HF)
+            print(self.utility(LM, HM, LF, HF))
 
             
         #c. extracting results
