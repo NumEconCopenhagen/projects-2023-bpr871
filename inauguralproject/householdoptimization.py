@@ -45,6 +45,11 @@ class HouseholdOptimizationClass:
         sol.beta0 = np.nan
         sol.beta1 = np.nan
 
+        # g. extension
+        par.extension = False
+        par.mu = 2
+
+
     def utility(self,LM,HM,LF,HF):
         """
         This function calculates the utility of the household. 
@@ -80,14 +85,19 @@ class HouseholdOptimizationClass:
             H = ((1-par.alpha)*HM**((par.sigma-1)/(par.sigma + 1e-8)) + par.alpha*HF**((par.sigma-1)/(par.sigma + 1e-8)))**((par.sigma)/(par.sigma-1 + 1e-8))
 
 
-        # c. total consumption utility
+        # c. total utility
         Q = C**par.omega*H**(1-par.omega)
         utility = np.fmax(Q,1e-8)**(1-par.rho)/(1-par.rho + 1e-8)
 
-        # d. disutility of work
+        # d. calculate male "felt" hours if extension
+        if par.extension:
+            TM = LM + par.mu*HM
+        else:
+            TM = LM + HM
+
+        # e. disutility
         epsilon_ = 1+1/(par.epsilon + 1e-8) # to shorten the function
-        TM = LM+HM
-        TF = LF+HF
+        TF = LF + HF
         disutility = par.nu*(TM**epsilon_/(epsilon_+ 1e-8)+TF**epsilon_/(epsilon_+ 1e-8))
 
         return  utility - disutility 
@@ -216,6 +226,7 @@ class HouseholdOptimizationClass:
 
         return ratio_H, ratio_w
 
+"""
     def extension(self,LM,HM,LF,HF,mu):
         par = self.par
         sol = self.sol
@@ -226,7 +237,7 @@ class HouseholdOptimizationClass:
         return  self.utility() - disutility 
 
 
-
+"""
 
 
 
