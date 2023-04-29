@@ -203,8 +203,8 @@ class HouseholdOptimizationClass:
             sol.HF_wage_vec.append(HF)
             
             #test: assesing the values of HM, HF and the utility
-            print(HM, HF)
-            print(self.utility(LM, HM, LF, HF))
+            #print(HM, HF)
+            #print(self.utility(LM, HM, LF, HF))
 
             
         #c. extracting results
