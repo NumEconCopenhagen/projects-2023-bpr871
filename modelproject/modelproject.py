@@ -66,3 +66,4 @@ def profit(p_i, p_j, c, demand):
 
     return profit
 
+# def differentiated_goods():
