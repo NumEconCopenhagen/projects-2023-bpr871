@@ -91,8 +91,8 @@ class HouseholdOptimizationClass:
 
         # d. calculate male "felt" hours if extension
         if par.extension:
-            TM = LM + par.mu_M*HM
-            TF = LF + par.mu_F*HF
+            TM = par.mu_M*LM + HM
+            TF = par.mu_F*LF + HF
             #TF = LF + (1+par.mu)*HF # ny tilføjelse
         else:
             TM = LM + HM
