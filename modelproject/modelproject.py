@@ -85,27 +85,31 @@ class CournotNashEquilibriumSolver:
 
         par = self.par = SimpleNamespace()
 
-        par.a = 1 # demand for good 1
-        par.b = 1 # demand for good 2
+        par.alpha = 1 # preference for good 1
+        par.beta = 1 # preference for good 2
         par.X = 20 # demand for p=0
         par.c  = [0,0] # marginal cost
         
     def demand_function(self, q1, q2):
+        # the inverted demand function
         par = self.par
-        demand = par.X-par.a*q1-par.b*q2 # inverted demand function
+        demand = par.X-par.alpha*q1-par.beta*q2 
         return demand
 
     def cost_function(self, q, c):
         return c*q # marginal cost times quantity
 
     def profits(self, c, q1, q2): 
-        # income - expenditures
-        return self.demand_function(q1,q2)*q1-self.cost_function(q1,c)
+        # income - costs
+        income = self.demand_function(q1,q2)*q1
+        cost = self.cost_function(q1,c)
+        profit = income - cost
+        return profit
     
-    def reaction(self, q2,c1):
-        # Maaaaaaax profit
-        responce =  optimize.minimize(lambda x: - self.profits(c1,x,q2), x0=0, method = 'SLSQP')
-        return responce.x # best responce
+    def reaction(self, q1,c2):
+        # company 2 reacts to price of company 1
+        response =  optimize.minimize(lambda x: - self.profits(c2,x,q1), x0=0, method = 'SLSQP')
+        return response.x # best response
 
     def fixed_point(self, q):
         par = self.par
