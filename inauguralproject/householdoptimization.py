@@ -80,7 +80,6 @@ class HouseholdOptimizationClass:
         if np.isclose(par.sigma, 0, atol=1e-08, equal_nan=False):
             H = min(HM,HF)
         elif np.isclose(par.sigma, 1, atol=1e-08, equal_nan=False):
-        #par.sigma == 1:
             H = HM**(1-par.alpha)*HF**par.alpha
         else:
             H = ((1-par.alpha)*HM**((par.sigma-1)/(par.sigma + 1e-8)) + par.alpha*HF**((par.sigma-1)/(par.sigma + 1e-8)))**((par.sigma)/(par.sigma-1 + 1e-8))
@@ -158,6 +157,8 @@ class HouseholdOptimizationClass:
         Utility is calculated using labor hours as well as consumption. 
         Only labor hours in the market can be converted in to consumption. 
 
+        Objective is the inverse of utility as we are want to minimize the negative value of total utility (maximize utility).
+
         Returns:
             LM, HM, LF, HF: Returns the four solutions to the continuous maximization problem. 
         """
@@ -167,6 +168,7 @@ class HouseholdOptimizationClass:
         #opt = SimpleNamespace()
 
         def objective(x):
+            #print(self.utility(*x))
             return -self.utility(*x)    
         
         # d. constraints and bounds: if T > 24 return minus infinity (constraint broken)
@@ -176,7 +178,7 @@ class HouseholdOptimizationClass:
         
         # c. call solver
         x0 = [2,2,2,2]
-        result = optimize.minimize(objective,x0, method='Nelder-Mead', bounds = bounds, constraints=constraints)  #method='SLSQP',bounds=bounds,
+        result = optimize.minimize(objective,x0, method='Nelder-Mead', bounds = bounds, constraints=constraints)  
 
         # d. unpack variables
         LM = result.x[0]
@@ -230,20 +232,6 @@ class HouseholdOptimizationClass:
         ratio_w = np.log(par.wF_list)    
 
         return ratio_H, ratio_w
-
-"""
-    def extension(self,LM,HM,LF,HF,mu):
-        par = self.par
-        sol = self.sol
-
-        # Optimize over mu to implement the target parameters when alpha = 0.5
-        disutility = self.nu*((mu*LM + HM)**self.epsilon_/(self.epsilon_+ 1e-8)+(LF + HF)**self.epsilon_/(self.epsilon_+ 1e-8))
-
-        return  self.utility() - disutility 
-
-
-"""
-
 
 
 
