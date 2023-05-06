@@ -47,7 +47,8 @@ class HouseholdOptimizationClass:
 
         # g. extension
         par.extension = False
-        par.mu = 2
+        par.mu_F = 2
+        par.mu_M = 2
 
 
     def utility(self,LM,HM,LF,HF):
@@ -91,15 +92,17 @@ class HouseholdOptimizationClass:
 
         # d. calculate male "felt" hours if extension
         if par.extension:
-            TM = LM + par.mu*HM
-            TF = LF + (1+par.mu)*HF # ny tilføjelse
+            TM = LM + par.mu_M*HM
+            TF = LF + par.mu_F*HF
+            #TF = LF + (1+par.mu)*HF # ny tilføjelse
         else:
             TM = LM + HM
-            TF = LF + HF # ny tilføjelse
+            TF = LF + HF
+            #TF = LF + HF # ny tilføjelse
 
         # e. disutility
         epsilon_ = 1+1/(par.epsilon + 1e-8) # to shorten the function
-        TF = LF + HF
+        #TF = LF + HF
         disutility = par.nu*(TM**epsilon_/(epsilon_+ 1e-8)+TF**epsilon_/(epsilon_+ 1e-8))
 
         return  utility - disutility 
