@@ -125,44 +125,6 @@ def sol_stackelberg(a, c):
     q_2 = stackelberg_reaction(q_1, a, c)
     return q_1, q_2
 
-# def stackelberg_reaction(q_1, a, c):
-#     """ Returns optimal quantities produced for firm 1 and firm 2
-#     Firm 1: Leader
-#     Firm 2: Follower
-
-#     Args:
-#         demand (function): function for demand from consumers of the homogenous good
-#         c (float): marginal costs
-
-#     Returns:
-#         q_1: optimal quantity produced by firm 1 (leader)
-#         q_2: optimal quantity produced by firm 2 (follower)
-#     """ 
-#     q_2 = (a-q_1-c)/2
-
-#     return q_2
-
-# def sol_stackelberg(a, c, q_2 = 2):
-#     """ Returns optimal quantities produced for firm 1 and firm 2
-#     Firm 1: Leader
-#     Firm 2: Follower
-
-#     Args:
-#         demand (function): function for demand from consumers of the homogenous good
-#         c (float): marginal costs
-
-#     Returns:
-#         q_1: optimal quantity produced by firm 1 (leader)
-#         q_2: optimal quantity produced by firm 2 (follower)
-#     """ 
-
-#     #response =  optimize.minimize(lambda q_1: - q_1*(a-(q_1+stackelberg_reaction().q_2)-c), x0=1, method = 'SLSQP')
-#     response =  optimize.minimize(lambda q_1: - q_1*(a-(q_1 + q_2)-c), x0=1, method = 'SLSQP')
-#     return response.q_1  
-
-
-
-
 
 class CournotNashEquilibriumSolver:
     def __init__(self):
