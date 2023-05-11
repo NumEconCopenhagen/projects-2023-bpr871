@@ -21,8 +21,8 @@ def solve_ss(alpha, c):
     
     return result
 
-def demand(a, b, p_i, p_j):
-    """ Returns demand faced by firm i
+def demand_Q(a, b, p_i, p_j):
+    """ Returns demand faced by firm i: Return the quantity demanded
 
     Args:
         p_i (float): price for firm i 
@@ -35,15 +35,31 @@ def demand(a, b, p_i, p_j):
     
     # a. Objective function
     if p_i > p_j: 
-        demand = 0
+        demand_Q = 0
     elif p_i == p_j: 
-        demand = 1/2*(a-b*p_i)
+        demand_Q = 1/2*(a-b*p_i)
     else:
-        demand = (a-b*p_i)
+        demand_Q = (a-b*p_i)
 
-    return demand
+    return demand_Q
 
-def profit(p_i, p_j, c, demand):
+def demand_P(a, q_1, q_2):
+    """ Returns total demand: Return the willingness to pay at a given quantity
+    Args:
+        q_1 (float): quantity produced for firm 1
+        q_2 (float): quantity produced for firm 2
+
+    Returns:
+        demand (RootResults): the return is demand
+
+    """ 
+    
+    # a. Objective function
+    demand_P = a - (q_1 + q_2)
+
+    return demand_P
+
+def profit(p_i, p_j, c, demand_Q):
     """ Returns profit for firm i
 
     Args:
@@ -60,13 +76,42 @@ def profit(p_i, p_j, c, demand):
     if p_i > p_j: 
         profit = 0
     elif p_i == p_j: 
-        profit = (p_i-c)*1/2*demand
+        profit = (p_i-c)*1/2*demand_Q
     else:
-        profit = (p_i-c)*1/2*demand
+        profit = (p_i-c)*1/2*demand_Q
 
     return profit
 
-# def differentiated_goods():
+def stackelberg_reaction(q_1, a, c):
+    """ Returns optimal quantities produced for firm 1 and firm 2
+    Firm 1: Leader
+    Firm 2: Follower
+
+    Args:
+        demand (function): function for demand from consumers of the homogenous good
+        c (float): marginal costs
+
+    Returns:
+        q_1: optimal quantity produced by firm 1 (leader)
+        q_2: optimal quantity produced by firm 2 (follower)
+    """ 
+    q_2 = (a-q_1-c)/2
+
+    return q_2
+
+def sol_stackelberg(demand_Q, c):
+    """ Returns optimal quantities produced for firm 1 and firm 2
+    Firm 1: Leader
+    Firm 2: Follower
+
+    Args:
+        demand (function): function for demand from consumers of the homogenous good
+        c (float): marginal costs
+
+    Returns:
+        q_1: optimal quantity produced by firm 1 (leader)
+        q_2: optimal quantity produced by firm 2 (follower)
+    """ 
 
 
 
