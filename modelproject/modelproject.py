@@ -169,3 +169,4 @@ class CournotNashEquilibriumSolver:
         # solve system of equations.
         res = optimize.fsolve(lambda q: self.fixed_point(q), initial_guess)
         return res
+        
