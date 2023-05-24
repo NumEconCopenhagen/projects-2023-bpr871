@@ -24,7 +24,7 @@ def solve_ss(alpha, c):
     
     return result
 
-def demand_Q(a, b, p_i, p_j):
+def demand_Q(a = 8, b = 1, p_i = 4, p_j = 4):
     """ Returns demand faced by firm i: Return the quantity demanded
 
     Args:
@@ -35,7 +35,7 @@ def demand_Q(a, b, p_i, p_j):
         demand (RootResults): the return is demand
 
     """ 
-    
+
     # a. Objective function
     if p_i > p_j: 
         demand_Q = 0
@@ -62,7 +62,7 @@ def demand_P(a, q_1, q_2):
 
     return demand_P
 
-def profit(p_i, p_j, c, demand_Q):
+def profit(p_i = 4, p_j = 4, c = 2, demand_Q):
     """ Returns profit for firm i
 
     Args:
