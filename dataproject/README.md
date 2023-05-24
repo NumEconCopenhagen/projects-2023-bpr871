@@ -2,6 +2,13 @@
 
 Our project is titled **Robotics across industries** and is about the development of robots in different industries and the resulting effect on productivity.
 
+# \[Group: bpr871\]
+
+***Group members:***
+- Sissel Marie Andersen (bpr871)
+- Hjalte Bisgaard (lfc749)
+- Julie Skaarup Roesgaard (spr506)
+
 The **results** of the project can be seen from running [dataproject.ipynb](dataproject.ipynb).
 
 We apply the **following datasets**:
