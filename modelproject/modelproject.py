@@ -62,7 +62,8 @@ def demand_P(a, q_1, q_2):
 
     return demand_P
 
-def profit(p_i = 4, p_j = 4, c = 2, demand_Q):
+def profit(p_i = 4, p_j = 4, c = 2, demand_Q = demand_Q):
+    
     """ Returns profit for firm i
 
     Args:
