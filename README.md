@@ -6,10 +6,10 @@
 - Julie Skaarup Roesgaard (spr506)
 
 This repository contains  
-1. Inaugural project
-2. Data project: 
+1. ***Inaugural project***
+2. ***Data project: ***
 Project on the correlation between industry specific automation and employment in Denmark. We utilize data on industrial robots in Denmark from the International Federation of Robotics and fetch data om relevant labor market outcomes for Denmark using the API for statistikbanken, Danmarks Statistik. First we provide som descriptive statistics on the relationsship after which we perform a parsimoneous univariate regression.
-3. Model project
+3. ***Model project***
 We explore the environment of imperfect competition drawing on different versions of theoretical models. The models utilized to investigate the effects of imperfect competition are: 
 - Bertrand Model:    Firms compete on price-setting strategies 
 - Cournot Model:     Firms compete on the quantity they get to supply in the market
