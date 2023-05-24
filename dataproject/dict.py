@@ -1,4 +1,12 @@
 
+"""
+    dict_crosswalk: Content
+
+    Contains a crosswalk file for converting the industry classifications 
+    from Danmarks Statistik in to the classification system from the 
+    Industrial Federation of Robotics.
+"""
+
 dict_crosswalk = {'01000':'A-B-Agriculture, forestry, fishing',
     '02000':'A-B-Agriculture, forestry, fishing',
     '03000':'A-B-Agriculture, forestry, fishing',
@@ -29,6 +37,13 @@ dict_crosswalk = {'01000':'A-B-Agriculture, forestry, fishing',
     '72002':'P-Education/research/development',
     '85202':'P-Education/research/development'}
 
+"""
+    dict_legend: Content
+
+    Translation for the industry classifications for IFR 
+    in to more appropriate legend titles.
+"""
+  
 dict_legend = {
     'A-B-Agriculture, forestry, fishing': 'Agriculture, forestry, fishing',
     'C-Mining and quarrying': 'Mining and quarrying',

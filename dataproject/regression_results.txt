@@ -5,7 +5,7 @@ Dep. Variable:      Educational level   R-squared:                       0.000
 Model:                            OLS   Adj. R-squared:                 -0.004
 Method:                 Least Squares   F-statistic:                    0.1196
 Date:                Wed, 24 May 2023   Prob (F-statistic):              0.730
-Time:                        12:14:08   Log-Likelihood:                -375.67
+Time:                        12:36:37   Log-Likelihood:                -375.67
 No. Observations:                 243   AIC:                             755.3
 Df Residuals:                     241   BIC:                             762.3
 Df Model:                           1                                         
@@ -31,7 +31,7 @@ Dep. Variable:     It-Capital deepening   R-squared:                       0.001
 Model:                              OLS   Adj. R-squared:                 -0.003
 Method:                   Least Squares   F-statistic:                    0.2059
 Date:                  Wed, 24 May 2023   Prob (F-statistic):              0.650
-Time:                          12:14:08   Log-Likelihood:                -478.45
+Time:                          12:36:37   Log-Likelihood:                -478.45
 No. Observations:                   243   AIC:                             960.9
 Df Residuals:                       241   BIC:                             967.9
 Df Model:                             1                                         
@@ -57,7 +57,7 @@ Dep. Variable:     Labour productivity   R-squared:                       0.000
 Model:                             OLS   Adj. R-squared:                 -0.004
 Method:                  Least Squares   F-statistic:                   0.02352
 Date:                 Wed, 24 May 2023   Prob (F-statistic):              0.878
-Time:                         12:14:08   Log-Likelihood:                -1134.4
+Time:                         12:36:37   Log-Likelihood:                -1134.4
 No. Observations:                  243   AIC:                             2273.
 Df Residuals:                      241   BIC:                             2280.
 Df Model:                            1                                         
@@ -83,7 +83,7 @@ Dep. Variable:     Non IT-capital deepening   R-squared:                       0
 Model:                                  OLS   Adj. R-squared:                  0.002
 Method:                       Least Squares   F-statistic:                     1.382
 Date:                      Wed, 24 May 2023   Prob (F-statistic):              0.241
-Time:                              12:14:08   Log-Likelihood:                -797.75
+Time:                              12:36:37   Log-Likelihood:                -797.75
 No. Observations:                       243   AIC:                             1599.
 Df Residuals:                           241   BIC:                             1606.
 Df Model:                                 1                                         
@@ -109,7 +109,7 @@ Dep. Variable:     Total factor productivity   R-squared:                       
 Model:                                   OLS   Adj. R-squared:                 -0.003
 Method:                        Least Squares   F-statistic:                    0.1839
 Date:                       Wed, 24 May 2023   Prob (F-statistic):              0.668
-Time:                               12:14:08   Log-Likelihood:                -1119.6
+Time:                               12:36:37   Log-Likelihood:                -1119.6
 No. Observations:                        243   AIC:                             2243.
 Df Residuals:                            241   BIC:                             2250.
 Df Model:                                  1                                         
