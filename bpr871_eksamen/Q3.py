@@ -29,7 +29,7 @@ def x_k0(chi_k, xs_k, xopt):
     xs_k0 = chi_k * xs_k + (1 - chi_k) * xopt
     return xs_k0
 
-def optimizer(x0s, K_=10, K=1000, x_bound=600, tau=1e-10):
+def optimizer(K_=10, K=1000, x_bound=600, tau=1e-10):
 
     # draw x values for the multi-start
     np.random.seed(1998)
