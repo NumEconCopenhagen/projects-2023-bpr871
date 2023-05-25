@@ -18,5 +18,5 @@ We apply the **following datasets**:
 3. NABB69 from Danmarks Statistik https://www.statistikbanken.dk/np25
 
 We import the following dictionaries from the file **dict.py**:
-1. dict_crosswalk: Contains a crosswalk file for converting the industry classifications from Danmarks Statistik in to the classification system from the Industrial Federation of Robotics.
-2. dict_legend:    Translation for the industry classifications for IFR in to more appropriate legend titles.
+1. **dict_crosswalk:** Contains a crosswalk file for converting the industry classifications from Danmarks Statistik in to the classification system from the Industrial Federation of Robotics.
+2. **dict_legend:**    Translation for the industry classifications for IFR in to more appropriate legend titles.
