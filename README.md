@@ -6,7 +6,8 @@
 - Julie Skaarup Roesgaard (spr506)
 
 This repository contains  
-1. ***Inaugural project***
+1. ***Inaugural project*** \
+Project on household optimization of working hours and house production. We aim to replicate the findings in Siminsky and Yetsenga (2022) and extent our model with a disutility parameter on hours worked in the market for the male agent.
 2. ***Data project:*** \
 Project on the correlation between industry specific automation and employment in Denmark. We utilize data on industrial robots in Denmark from the International Federation of Robotics and fetch data om relevant labor market outcomes for Denmark using the API for statistikbanken, Danmarks Statistik. First we provide some descriptive statistics on the relationsship after which we perform a parsimoneous univariate regression.
 3. ***Model project*** \
