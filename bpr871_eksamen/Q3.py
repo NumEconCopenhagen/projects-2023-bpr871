@@ -29,7 +29,7 @@ def x_k0(chi_k, xs_k, xopt):
     xs_k0 = chi_k * xs_k + (1 - chi_k) * xopt
     return xs_k0
 
-def optimizer(K_=10, K=1000, x_bound=600, tau=1e-10, _Print=True):
+def optimizer(K_=10, K=1000, x_bound=600, tau=1e-10, _Print=True, _Plot=True):
 
     # draw x values for the multi-start
     np.random.seed(1998)
@@ -85,3 +85,11 @@ def optimizer(K_=10, K=1000, x_bound=600, tau=1e-10, _Print=True):
             
     # best solution
     print(f'\nbest solution:\n x = ({xopt[0]:7.2f},{xopt[1]:7.2f}) -> f = {fopt:12.8f}  )')
+
+    if _Plot:
+        # plotting
+        plt.plot(k_values, x0k_values)
+        plt.title('Effective $x^{k0}$ values for the iteration counter $k$')
+        plt.xlabel('$k$')
+        plt.ylabel('$x^{k0}$ values')
+        plt.show()
