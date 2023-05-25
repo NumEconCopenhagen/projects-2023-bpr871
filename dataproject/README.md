@@ -14,7 +14,7 @@ The **results** of the project can be seen from running [dataproject.ipynb](data
 We apply the **following datasets**:
 
 1. NP25.csv (*[source](https://www.statistikbanken.dk/np25)*) 
-2. ifr_dk.csv (*source*)
+2. ifr_dk.csv (*source: licensed data from International Federation of Robotics*)
 3. NABB69 from Danmarks Statistik (*[source](https://www.statistikbanken.dk/statbank5a/SelectVarVal/Define.asp?MainTable=NABB69&PLanguage=0&PXSId=0&wsid=cftree)*)
 
 We import the following dictionaries from the file **dict.py**:
