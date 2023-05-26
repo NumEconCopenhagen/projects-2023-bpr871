@@ -9,9 +9,6 @@ from matplotlib import cm
 from mpl_toolkits.mplot3d import Axes3D
 plt.style.use('seaborn-whitegrid')
 
-
-
-
 def kappas(par):
 
     """
@@ -56,7 +53,6 @@ def kappas(par):
 
     return k_values
 
-
 def calculate_l(par, kappas):
 
     """
@@ -85,7 +81,6 @@ def calculate_l(par, kappas):
         l_values.append(l)
 
     return l_values
-
 
 def calculate_h(par, k_values, l_values, t_values):
 
@@ -211,7 +206,6 @@ def calculate_H(par, doprint=True, doplot = False):
 
     return H, H_cum    # saved in case we want to return again
         
-
 def optimal_delta(par):
 
     """
