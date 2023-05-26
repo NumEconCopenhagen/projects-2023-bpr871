@@ -11,6 +11,7 @@ import ipywidgets as widgets
 import matplotlib.gridspec as gridspec
 
 class q1:
+    
     def __init__(self, tau):
 
         """
@@ -41,7 +42,6 @@ class q1:
         self.par2.rho = 1.5
         self.par2.epsilon = 1.0
         self.par2.kappa = 1.0
-
 
     def calculate_objective_cobbdoug(self, tau):
 
@@ -113,7 +113,6 @@ class q1:
         # Display the plot
         plt.show()
 
-   # Define the objective function
     def calculate_objective_ces(self,x,par,var):
 
         """
