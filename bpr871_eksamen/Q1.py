@@ -110,23 +110,21 @@ class q1:
             raise ValueError("Invalid parameter set specified.")
         
         # Modifying endogenous variables in question
-        if var == 'L_w':
+        if var == 'L':
 
             L = x[0]
-            w = x[1]
             tau = params.tau
 
-        elif var == 'L_w_tau':
+        elif var == 'L_tau':
 
             L   = x[0]
-            w   = x[1]
-            tau = x[2]
+            tau = x[1]
 
         else:
             raise ValueError("Invalid endogenous variable specified.")
         
-        C = params.kappa + (1 - tau) * w * L
-        G = tau * w * L 
+        C = params.kappa + (1 - tau) * params.w * L
+        G = tau * params.w * L 
         utility = ((params.alpha * C**((params.sigma-1) / params.sigma) + (1 - params.alpha) * G**((params.sigma-1) / params.sigma))**(1-params.rho) - 1) / (1 - params.rho)
         disutility = params.nu * (L**(1 + params.epsilon) / (1 + params.epsilon))
 
@@ -148,23 +146,23 @@ class q1:
             raise ValueError("Invalid parameter set specified.")
         
         # Modifying endogenous variables in question
-        if var == 'L_w':
+        if var == 'L':
 
             tau = params.tau
 
-            # Set the bounds for L and w
-            bounds = [(1e-08, 24 + 1e-08), (1e-08, None)]
+            # Set the bounds for L
+            bounds = [(1e-08, 24 + 1e-08)]
 
-            # Initial guess for L and w
-            x0 = [15, 1]
+            # Initial guess for L
+            x0 = [15]
 
-        elif var == 'L_w_tau':
+        elif var == 'L_tau':
 
-            # Set the bounds for L and w and tau
-            bounds = [(1e-08, 24 + 1e-08), (1e-08, None), (1e-08, 1-1e-08)]
+            # Set the bounds for L and tau
+            bounds = [(1e-08, 24 + 1e-08), (1e-08, 1-1e-08)]
 
-            # Initial guess for L and w and tau
-            x0 = [15, 1, 0.5]
+            # Initial guess for L and tau
+            x0 = [15, 0.5]
 
         else:
             raise ValueError("Invalid endogenous variable specified.")
@@ -172,26 +170,57 @@ class q1:
         # Perform the optimization to maximize obj with respect to L and w
         results = optimize.minimize(self.calculate_objective_ces, x0, args=(par,var), method='Nelder-Mead', bounds=bounds)
 
-        # Get the optimal values of L and w
+        # Get the optimal values of L 
         optimal_L = results.x[0]
-        optimal_w = results.x[1]
 
         # Modifying results to fit the estimation
-        if var == 'L_w':
+        if var == 'L':
             optimal_tau = tau
 
-        elif var == 'L_w_tau':
-            optimal_tau = results.x[2]
+        elif var == 'L_tau':
+            optimal_tau = results.x[1]
 
         else:
             raise ValueError("Invalid endogenous variable specified.")
         
 
         # Now find G using the obtained optimal_L and optimal_w
-        G = optimal_tau * optimal_w * optimal_L
+        G = optimal_tau * params.w * optimal_L
 
         # Print the optimal L, w, and the corresponding objective function value
         print(f"Optimal L: {round(optimal_L, 2)}")
-        print(f"Optimal w: {round(optimal_w, 2)}")
+        #print(f"Optimal w: {round(optimal_w, 2)}")
         print(f"Objective function value: {round(-results.fun, 2)}")
         print(f"Optimal G: {round(G, 2)}")
+
+    def illustrate_optimal_ces(self, par, var):
+        # Modifying parameters to fit Set1 or Set2
+        if par == 'par1':
+            params = self.par1
+        elif par == 'par2':
+            params = self.par2
+        else:
+            raise ValueError("Invalid parameter set specified.")
+
+        # Generate a range of L values
+        L_values = np.linspace(1e-08, 24-1e-08, 100)
+
+        # Calculate the objective function values for each L
+        objective_values = [-self.calculate_objective_ces([L, params.w, params.tau], par, var) for L in L_values]
+
+        # Calculate G values for each L
+        G_values = [params.tau * params.w * L for L in L_values]
+
+        # Plot the objective function values against L
+        plt.plot(L_values, objective_values, label='Objective Function')
+        plt.plot(L_values, G_values, label='G')
+        plt.xlabel('L')
+        plt.ylabel('Value')
+        plt.title('Government spending and Utility for different labor hours')
+        plt.grid(True)
+        plt.legend()
+
+        # Display the plot
+        plt.show()
+
+
