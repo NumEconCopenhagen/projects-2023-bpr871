@@ -155,13 +155,8 @@ class q1:
         utility = ((((params.alpha * C ** ((params.sigma - 1) / params.sigma) + (1 - params.alpha) * G ** ((params.sigma - 1) / params.sigma))) ** (params.sigma / (params.sigma - 1))) ** (1 - params.rho) - 1) / (1 - params.rho)
         disutility = params.nu * (L ** (1 + params.epsilon) / (1 + params.epsilon))
 
-        # C = params.kappa + (1 - tau) * params.w * L
-        # G = tau * params.w * L 
-        # utility = ((((params.alpha * C**((params.sigma-1) / params.sigma) + (1 - params.alpha) * G**((params.sigma-1) / params.sigma)))**(params.sigma/params.sigma-1))**(1-params.rho) - 1) / (1 - params.rho)
-        # disutility = params.nu * (L**(1 + params.epsilon) / (1 + params.epsilon))
-
         return -utility + disutility
-
+    
     def optimize_and_print_ces(self,par,var):
 
         """
@@ -226,8 +221,13 @@ class q1:
         print(f"Optimal L: {round(optimal_L, 2)}")
         print(f"Objective function value: {round(-results.fun, 2)}")
         print(f"Optimal G: {round(G, 2)}")
+        if var == 'L_tau':
+            print(f"Optimal tau: {round(optimal_tau, 2)}")
 
-    def illustrate_optimal_ces(self, par, var):
+
+        return optimal_L, optimal_tau
+
+    def illustrate_optimal_ces(self, par, var, optimal_L):
 
         """
         Illustrates the optimal values for the CES function.
@@ -264,17 +264,30 @@ class q1:
         ax1 = plt.subplot(gs[0])
         ax1.plot(L_values, utility_values)
         ax1.set_xlabel('L')
+        ax1.axvline(x=optimal_L, color='r', linestyle='--', label='$L^*$')
+        ax1.legend()
         ax1.set_ylabel('Utility')
         ax1.set_title('Utility for different labor hours')
         ax1.grid(True)
+
+        # Add x-axis tick values
+        x_ticks = np.arange(0, 25, 4)
+        ax1.set_xticks(x_ticks)
+        ax1.set_xticklabels(x_ticks)
 
         # Plot G against L
         ax2 = plt.subplot(gs[1])
         ax2.plot(L_values, G_values)
         ax2.set_xlabel('L')
+        ax2.axvline(x=optimal_L, color='r', linestyle='--', label='$L^*$')
+        ax2.legend()
         ax2.set_ylabel('G')
         ax2.set_title('Government Spending for different labor hours')
         ax2.grid(True)
+    
+        # Add x-axis tick values
+        ax2.set_xticks(x_ticks)
+        ax2.set_xticklabels(x_ticks)
 
         # Adjust the spacing between subplots
         plt.tight_layout()
