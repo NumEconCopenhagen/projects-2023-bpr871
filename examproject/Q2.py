@@ -110,6 +110,7 @@ def calculate_h(par, k_values, l_values, t_values):
     R = (1+r)**(1/12)
     delta = par.delta
     extension = par.extension
+    mu = par.mu 
 
     # initialise h and l values
     h_value = 0
@@ -129,11 +130,12 @@ def calculate_h(par, k_values, l_values, t_values):
         # using an indicator to account for changes in l    
         indicator = 1 if lt != l_previous else 0     
 
+        sub = 0
+ 
         if extension == True:
             if kappa < 1 and indicator == 1:
-                sub = 0.1
-            else:
-                sub = 0
+                sub = mu
+ 
 
         # adding the return for the current period to the h sum
         h_value += R ** (-t) * (kappa * lt**(1 - eta) - w * lt - indicator * iota) + sub
