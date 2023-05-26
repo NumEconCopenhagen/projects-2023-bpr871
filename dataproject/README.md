@@ -6,7 +6,7 @@ Our project is titled **Robotics across industries** and is about the developmen
 
 ***Group members:***
 - Sissel Marie Andersen (bpr871)
-- Hjalte Bisgaard (lfc749)
+- Hjalte Bøgelund Bisgaard (lfc749)
 - Julie Skaarup Roesgaard (spr506)
 
 The **results** of the project can be seen from running [dataproject.ipynb](dataproject.ipynb).

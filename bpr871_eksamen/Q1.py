@@ -8,6 +8,7 @@ from types import SimpleNamespace
 # local modules
 from types import SimpleNamespace
 import ipywidgets as widgets
+import matplotlib.gridspec as gridspec
 
 class q1:
     def __init__(self, tau):
@@ -124,9 +125,14 @@ class q1:
             raise ValueError("Invalid endogenous variable specified.")
         
         C = params.kappa + (1 - tau) * params.w * L
-        G = tau * params.w * L 
-        utility = ((params.alpha * C**((params.sigma-1) / params.sigma) + (1 - params.alpha) * G**((params.sigma-1) / params.sigma))**(1-params.rho) - 1) / (1 - params.rho)
-        disutility = params.nu * (L**(1 + params.epsilon) / (1 + params.epsilon))
+        G = tau * params.w * L
+        utility = ((((params.alpha * C ** ((params.sigma - 1) / params.sigma) + (1 - params.alpha) * G ** ((params.sigma - 1) / params.sigma))) ** (params.sigma / (params.sigma - 1))) ** (1 - params.rho) - 1) / (1 - params.rho)
+        disutility = params.nu * (L ** (1 + params.epsilon) / (1 + params.epsilon))
+
+        # C = params.kappa + (1 - tau) * params.w * L
+        # G = tau * params.w * L 
+        # utility = ((((params.alpha * C**((params.sigma-1) / params.sigma) + (1 - params.alpha) * G**((params.sigma-1) / params.sigma)))**(params.sigma/params.sigma-1))**(1-params.rho) - 1) / (1 - params.rho)
+        # disutility = params.nu * (L**(1 + params.epsilon) / (1 + params.epsilon))
 
         return -utility + disutility
 
@@ -189,7 +195,6 @@ class q1:
 
         # Print the optimal L, w, and the corresponding objective function value
         print(f"Optimal L: {round(optimal_L, 2)}")
-        #print(f"Optimal w: {round(optimal_w, 2)}")
         print(f"Objective function value: {round(-results.fun, 2)}")
         print(f"Optimal G: {round(G, 2)}")
 
@@ -205,22 +210,110 @@ class q1:
         # Generate a range of L values
         L_values = np.linspace(1e-08, 24-1e-08, 100)
 
-        # Calculate the objective function values for each L
-        objective_values = [-self.calculate_objective_ces([L, params.w, params.tau], par, var) for L in L_values]
+        # Calculate the utility values for each L
+        utility_values = [-self.calculate_objective_ces([L, params.w, params.tau], par, var) for L in L_values]
 
-        # Calculate G values for each L
+        # Calculate the corresponding G values for each L
         G_values = [params.tau * params.w * L for L in L_values]
 
-        # Plot the objective function values against L
-        plt.plot(L_values, objective_values, label='Objective Function')
-        plt.plot(L_values, G_values, label='G')
-        plt.xlabel('L')
-        plt.ylabel('Value')
-        plt.title('Government spending and Utility for different labor hours')
-        plt.grid(True)
-        plt.legend()
+        # Set the figure size to fit the notebook width
+        plt.figure(figsize=(12, 4))
 
-        # Display the plot
+        # Create a gridspec layout with 1 row and 2 columns
+        gs = gridspec.GridSpec(1, 2, width_ratios=[1, 1.2])
+
+        # Plot utility against L
+        ax1 = plt.subplot(gs[0])
+        ax1.plot(L_values, utility_values)
+        ax1.set_xlabel('L')
+        ax1.set_ylabel('Utility')
+        ax1.set_title('Utility for different labor hours')
+        ax1.grid(True)
+
+        # Plot G against L
+        ax2 = plt.subplot(gs[1])
+        ax2.plot(L_values, G_values)
+        ax2.set_xlabel('L')
+        ax2.set_ylabel('G')
+        ax2.set_title('Government Spending for different labor hours')
+        ax2.grid(True)
+
+        # Adjust the spacing between subplots
+        plt.tight_layout()
+
+        # Adjust the layout to fit the notebook width
+        plt.subplots_adjust(left=0.05, right=0.95)
+
+        # Display the plots
         plt.show()
+
+
+    # def illustrate_optimal_ces(self, par, var):
+    #     # Modifying parameters to fit Set1 or Set2
+    #     if par == 'par1':
+    #         params = self.par1
+    #     elif par == 'par2':
+    #         params = self.par2
+    #     else:
+    #         raise ValueError("Invalid parameter set specified.")
+
+    #     # Generate a range of L values
+    #     L_values = np.linspace(1e-08, 24-1e-08, 100)
+
+    #     # Calculate the utility values for each L
+    #     utility_values = [-self.calculate_objective_ces([L, params.w, params.tau], par, var) for L in L_values]
+
+    #     # Calculate the corresponding G values for each L
+    #     G_values = [params.tau * params.w * L for L in L_values]
+
+    #     # Plot utility against L
+    #     plt.subplot(1, 2, 1)
+    #     plt.plot(L_values, utility_values)
+    #     plt.xlabel('L')
+    #     plt.ylabel('Utility')
+    #     plt.title('Utility for different labor hours')
+    #     plt.grid(True)
+
+    #     # Plot G against L
+    #     plt.subplot(1, 2, 2)
+    #     plt.plot(L_values, G_values)
+    #     plt.xlabel('L')
+    #     plt.ylabel('G')
+    #     plt.title('Government Spending for different labor hours')
+    #     plt.grid(True)
+
+    #     # Adjust the spacing between subplots
+    #     plt.subplots_adjust(wspace=0.4)
+
+    #     # Adjust the layout and display the plots
+    #     plt.tight_layout()
+    #     plt.show()
+
+
+    # def illustrate_optimal_ces(self, par, var):
+    #     # Modifying parameters to fit Set1 or Set2
+    #     if par == 'par1':
+    #         params = self.par1
+    #     elif par == 'par2':
+    #         params = self.par2
+    #     else:
+    #         raise ValueError("Invalid parameter set specified.")
+
+    #     # Generate a range of L values
+    #     L_values = np.linspace(1e-08, 24-1e-08, 100)
+
+    #     # Calculate the utility values for each L
+    #     utility_values = [-self.calculate_objective_ces([L, params.w, params.tau], par, var) for L in L_values]
+
+    #     # Plot utility against L
+    #     plt.plot(L_values, utility_values)
+    #     plt.xlabel('L')
+    #     plt.ylabel('Utility')
+    #     plt.title('Utility for different labor hours')
+    #     plt.grid(True)
+
+    #     # Display the plot
+    #     plt.show()
+
 
 

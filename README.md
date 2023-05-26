@@ -2,7 +2,7 @@
 
 ***Group members:***
 - Sissel Marie Andersen (bpr871)
-- Hjalte Bisgaard (lfc749)
+- Hjalte Bøgelund Bisgaard (lfc749)
 - Julie Skaarup Roesgaard (spr506)
 
 This repository contains  
