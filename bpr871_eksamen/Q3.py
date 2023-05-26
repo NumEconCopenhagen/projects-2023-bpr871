@@ -29,7 +29,7 @@ def x_k0(chi_k, xs_k, xopt):
     xs_k0 = chi_k * xs_k + (1 - chi_k) * xopt
     return xs_k0
 
-def optimizer(K_=10, K=1000, x_bound=600, tau=1e-10, _Print=True, _Plot=True):
+def optimizer(K_=10, K=1000, x_bound=600, tau=1e-10, doprint=True, doplot=True):
 
     # draw x values for the multi-start
     np.random.seed(1998)
@@ -72,13 +72,14 @@ def optimizer(K_=10, K=1000, x_bound=600, tau=1e-10, _Print=True, _Plot=True):
         xs[k,:] = result.x
         f = result.fun
 
-        # print first 10 or if better than seen yet
+        # save first 10 or if better than seen yet
         if k < 10 or f < fopt: # plot 10 first or if improving
             if f < fopt:
                 fopt = f
                 xopt = xs[k,:]
-                
-            if _Print:
+
+            # print if doprint          
+            if doprint:
                 print(f'{k:4d}: x0 = ({x0[0]:7.2f},{x0[1]:7.2f})',end='')
                 print(f' -> x0_k = ({x0_k[0]:7.2f},{x0_k[1]:7.2f})',end='')
                 print(f' -> converged at ({xs[k][0]:7.2f},{xs[k][1]:7.2f}) with f = {f:12.8f}')
@@ -86,7 +87,7 @@ def optimizer(K_=10, K=1000, x_bound=600, tau=1e-10, _Print=True, _Plot=True):
     # best solution
     print(f'\nbest solution:\n x = ({xopt[0]:7.2f},{xopt[1]:7.2f}) -> f = {fopt:12.8f}  )')
 
-    if _Plot:
+    if doplot:
         # plotting
         plt.plot(k_values, x0k_values)
         plt.title('Effective $x^{k0}$ values for the iteration counter $k$')
