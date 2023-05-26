@@ -22,17 +22,58 @@ def griewank_(x1,x2):
     return A-B+1
 
 def chi(k, K_ = 10):
+    """
+    Calculates the chi value based on the iteration counter and a predefined parameter.
+
+    Parameters:
+        k (int): The iteration counter.
+        K_ (int, optional): The predefined parameter for controlling the computation. Default is 10.
+
+    Returns:
+        float: The calculated chi value.
+
+    """
     chi_value = 0.5 * 2 / (1 + np.exp((k - K_) / 100))
     return chi_value
 
 def x_k0(chi_k, xs_k, xopt):
+    """
+    Calculates the updated value of xs_k0 based on the chi_k parameter, previous value xs_k, and the optimal value xopt.
+
+    Parameters:
+        chi_k (float): The chi value used for weighting the x values.
+        xs_k (ndarray): The previous value of xs_k.
+        xopt (ndarray): The optimal value of x.
+
+    Returns:
+        ndarray: The updated value of xs_k0.
+
+    """
     xs_k0 = chi_k * xs_k + (1 - chi_k) * xopt
     return xs_k0
 
 def optimizer(K_=10, K=1000, x_bound=600, tau=1e-10, doprint=True, doplot=True):
+    """
+    Performs optimization using the multi-start method and plots the convergence behavior. 
+    All parameters are pre-defined. 
+
+    Parameters:
+        K_ (int): The number of warm-up iterations to skip.
+        K (int): The total number of iterations.
+        x_bound (float): The bound for drawing initial x values.
+        tau (float): The tolerance for optimization convergence.
+        doprint (bool): Flag to enable/disable printing optimization progress.
+        doplot (bool): Flag to enable/disable plotting the convergence behavior.
+
+    Returns:
+        Prints the first 10 iterations, and afterwards the relevant iteraions. 
+        Plots the iterations
+
+    """
+
 
     # draw x values for the multi-start
-    np.random.seed(1998)
+    np.random.seed(2023)
     x0s = -x_bound + (2*x_bound)*np.random.uniform(size=(K,2)) # in [-600,600]
     xs = np.empty((K,2))
     fs = np.empty(K)
@@ -49,12 +90,10 @@ def optimizer(K_=10, K=1000, x_bound=600, tau=1e-10, doprint=True, doplot=True):
 
     # for loop for optimizing over different x values
     for k,x0 in enumerate(x0s):
-        #K_ = 10 # NEEDS TO BE ABLE TO UPDATE AUTOMATICALLY FROM THE GLOBAL SCOPE
 
-
-        if k < K_:                          # skip if warm-up iterations
+        if k < K_:                   # skip if warm-up iterations
             x0_k = x0  
-        elif k > K_ or k == K_:             # refined x values 
+        elif k > K_ or k == K_:      # refined x values 
             chi_k = chi(k, K_)
             x0_k = x_k0(chi_k, x0, xopt)
         else:   
@@ -65,7 +104,6 @@ def optimizer(K_=10, K=1000, x_bound=600, tau=1e-10, doprint=True, doplot=True):
         x0_values.append(x0s)
         x0k_listformat = x0_k.tolist()
         x0k_values.append(x0k_listformat)
-        #x0k_values222.extend(x0_k)
         
         # optimization
         result = optimize.minimize(griewank,x0_k,method='BFGS',tol=tau)
