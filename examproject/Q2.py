@@ -31,7 +31,6 @@ def kappas(par):
 
     # draw epsilons
     epsilons = np.random.normal((0.5*sigma_epsilon**2), sigma_epsilon, (T,1))
-    #epsilon_list = epsilons.tolist()
 
     # initialize the list with an empty array
     log_kappas = np.zeros((len(epsilons),)) 
@@ -226,10 +225,6 @@ def optimal_delta(par):
     # create delta values and initialise H_values
     delta_values = np.linspace(0.0, 1.0, num=1000)
     H_values = []
-
-    # create a copy of the par namespace and set K to 10 for speed
-    #par_copy = copy.copy(par)
-    #par_copy.K = 10
 
     # loop over the delta values
     for delta in delta_values:
