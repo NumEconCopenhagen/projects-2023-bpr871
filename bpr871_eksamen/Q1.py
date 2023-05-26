@@ -7,12 +7,11 @@ from types import SimpleNamespace
 
 # local modules
 from types import SimpleNamespace
-import ipywidgets as widgets
 import matplotlib.gridspec as gridspec
 
 class q1:
     
-    def __init__(self, tau):
+    def __init__(self,tau):
 
         """
         Initializes the q1 class with the specified tau value.
