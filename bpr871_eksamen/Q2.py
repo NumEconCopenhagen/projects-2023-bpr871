@@ -31,9 +31,10 @@ def kappas(par):
     # unpack parameters
     sigma_epsilon = par.sigma_epsilon
     kappa_init = par.kappa_init
+    T = par.T
 
     # draw epsilons
-    epsilons = np.random.normal((0.5*sigma_epsilon**2), sigma_epsilon, (120,1))
+    epsilons = np.random.normal((0.5*sigma_epsilon**2), sigma_epsilon, (T,1))
     #epsilon_list = epsilons.tolist()
 
     # initialize the list with an empty array
