@@ -10,17 +10,6 @@ from mpl_toolkits.mplot3d import Axes3D
 plt.style.use('seaborn-whitegrid')
 
 
-#eta = 0.5
-#w = 1.0
-#rho = 0.9
-#iota = 0.01
-#R = (1+0.01)**(1/12)
-#sigma_epsilon = 0.1
-
-#kappa_init = 1
-#T = 120
-
-
 
 
 def kappas(par):
@@ -151,10 +140,6 @@ def calculate_h(par, k_values, l_values, t_values):
         l_previous = lt
 
     return h_value
-    
-    
-
-#sigma_epsilon=0.1, kappa_init=1, eta=0.5, w=1.0, rho=0.9, iota=0.01, r=0.01, T=120
 
 def calculate_H(par, doprint=True, doplot = False):
 
