@@ -6,7 +6,7 @@ Our project treats **IMPERFECT COMPETITION** in three different ways and investi
 
 ***Group members:***
 - Sissel Marie Andersen (bpr871)
-- Hjalte Bisgaard (lfc749)
+- Hjalte Bøgelund Bisgaard (lfc749)
 - Julie Skaarup Roesgaard (spr506)
 
 
