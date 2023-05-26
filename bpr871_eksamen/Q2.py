@@ -9,20 +9,26 @@ from mpl_toolkits.mplot3d import Axes3D
 plt.style.use('seaborn-whitegrid')
 
 
-eta = 0.5
-w = 1.0
-rho = 0.9
-iota = 0.01
-R = (1+0.01)**(1/12)
-sigma_epsilon = 0.1
+#eta = 0.5
+#w = 1.0
+#rho = 0.9
+#iota = 0.01
+#R = (1+0.01)**(1/12)
+#sigma_epsilon = 0.1
 
-kappa_init = 1
-T = 120
-
-
+#kappa_init = 1
+#T = 120
 
 
-def kappas():
+
+
+def kappas(par):
+
+    """Draws epsilons from a normal distribution and calculates the kappa values
+    """
+
+    sigma_epsilon = par.sigma_epsilon
+    kappa_init = par.kappa_init
 
     #draw epsilons
     epsilons = np.random.normal((0.5*sigma_epsilon**2), sigma_epsilon, (120,1))
@@ -34,7 +40,7 @@ def kappas():
     for i,epsilon in enumerate(epsilons):
         
         if i==0: 
-            log_kappa_t = np.log(1) + epsilon
+            log_kappa_t = np.log(kappa_init) + epsilon
         else:
             # Calculate the autoregressive value at time t
             log_kappa_t = log_kappas[i-1] + epsilon
@@ -49,7 +55,11 @@ def kappas():
     return k_values
 
 
-def calculate_l(kappas):
+def calculate_l(par, kappas):
+
+    eta = par.eta
+    w = par.w
+
     l_values = []
 
     for kappa in kappas:
@@ -59,13 +69,27 @@ def calculate_l(kappas):
     return l_values
 
 
-def calculate_h(k_values, l_values, t_values):
+def calculate_h(par, k_values, l_values, t_values):
+
+    eta = par.eta
+    w = par.w
+    iota = par.iota
+    r = par.r
+    R = (1+r)**(1/12)
+    delta = par.delta
+
     h_value = 0
     l_previous = 0
 
 
     for t, kappa, l in zip(t_values, k_values, l_values):
-        lt = l
+        lt_optimal = l
+
+        if abs(l_previous - lt_optimal) > delta:
+            lt = lt_optimal
+        else:
+            lt =  l_previous
+
         indicator = 1 if lt != l_previous else 0
         h_value += R ** (-t) * (kappa * lt**(1 - eta) - w * lt - indicator * iota)
         l_previous = lt
@@ -74,10 +98,19 @@ def calculate_h(k_values, l_values, t_values):
     
     
 
+#, sigma_epsilon=0.1, kappa_init=1, eta=0.5, w=1.0, rho=0.9, iota=0.01, r=0.01, T=120
 
-def calculate_H(K):
+def calculate_H(K, par):
 
-    t_values = list(range(120))
+
+    par.eta = 0.5
+    par.w = 1.0
+    par.rho = 0.9
+    par.iota = 0.01
+    r = par.r = 0.01
+    T = par.T
+
+    t_values = list(range(T))
     K_list = range(K)
 
     # create empty h_values list
@@ -87,11 +120,11 @@ def calculate_H(K):
     np.random.seed(1998)
 
     for k in K_list:
-        kappa_values = kappas()
-        ltest = calculate_l(kappa_values)
-        htest = calculate_h(kappa_values, ltest, t_values)
+        kappa_values = kappas(par)
+        l_values_test = calculate_l(par, kappa_values)
+        h_value_temp = calculate_h(par, kappa_values, l_values_test, t_values)
 
-        h_sum.append(htest)
+        h_sum.append(h_value_temp)
         mean_until_now = np.mean(h_sum)
         mean_list.append(mean_until_now)
 
