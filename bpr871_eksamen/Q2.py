@@ -25,15 +25,26 @@ plt.style.use('seaborn-whitegrid')
 
 def kappas(par):
 
-    """Draws epsilons from a normal distribution and calculates the kappa values
+    """
+    Draws epsilon values from a normal distribution and calculates kappa values.
+
+    Args:
+        par (object): A parameter object containing the following attributes:
+            - sigma_epsilon (float): Standard deviation of the normal distribution used to draw epsilons.
+            - kappa_init (float): Initial value of kappa.
+            - T (int): Number of months in planning horizon.
+
+    Returns:
+        list: A list of kappa values.
     """
 
     # unpack parameters
     sigma_epsilon = par.sigma_epsilon
     kappa_init = par.kappa_init
+    T = par.T
 
     # draw epsilons
-    epsilons = np.random.normal((0.5*sigma_epsilon**2), sigma_epsilon, (120,1))
+    epsilons = np.random.normal((0.5*sigma_epsilon**2), sigma_epsilon, (T,1))
     #epsilon_list = epsilons.tolist()
 
     # initialize the list with an empty array
@@ -59,7 +70,18 @@ def kappas(par):
 
 def calculate_l(par, kappas):
 
-    """calculates l for each kappa value"""
+    """
+    Calculates l for each kappa value.
+
+    Args:
+        par (object): A parameter object containing the following attributes:
+            - eta (float): Eta value used in the calculation.
+            - w (float): W value used in the calculation.
+        kappas (list): A list of kappa values.
+
+    Returns:
+        list: A list of l values corresponding to each kappa value.
+    """
 
     # unpack parameters
     eta = par.eta
@@ -78,7 +100,23 @@ def calculate_l(par, kappas):
 
 def calculate_h(par, k_values, l_values, t_values):
 
-    """calculates the profit in each period"""
+    """
+    Calculates the value of h (profit) in each period based on given parameters, kappa values and l values.
+
+    Args:
+        par (object): A parameter object containing the following attributes:
+            - eta (float): Eta value used in the calculation.
+            - w (float): W value used in the calculation.
+            - iota (float): Iota value used in the calculation.
+            - r (float): Discount factor used in the calculation.
+            - delta (float): Delta value used in the calculation.
+        k_values (list): A list of kappa values.
+        l_values (list): A list of l values.
+        T (int): Number of months in planning horizon
+
+    Returns:
+        float: The calculated value of h.
+    """
 
     # unpack parameters
     eta = par.eta
@@ -120,7 +158,24 @@ def calculate_h(par, k_values, l_values, t_values):
 
 def calculate_H(par):
 
-    """loops over different shock scenarios and takes the mean of all scenarios"""
+    """
+    Calculates the mean value of h over different shock scenarios.
+
+    Args:
+        par (object): A parameter object containing the necessary attributes:
+            - sigma_epsilon (float): Standard deviation of the normal distribution used to draw epsilons.
+            - kappa_init (float): Initial value of kappa.
+            - T (int): Number of months in planning horizon
+            - eta (float): Eta value used in the calculation.
+            - w (float): W value used in the calculation.
+            - iota (float): Iota value used in the calculation.
+            - r (float): Discount factor used in the calculation.
+            - delta (float): Delta value used in the calculation.
+            - K (int): Number of shock scenarios.
+
+    Returns:
+        tuple: A tuple containing the mean value of h (H) and a list of cumulative means for plotting.
+    """
 
     # set seed
     np.random.seed(2023)
@@ -154,6 +209,19 @@ def calculate_H(par):
 
 def optimal_delta(par):
 
+    """
+    Finds the optimal value of delta by calculating h for different delta values and plotting the results.
+
+    Args:
+        par (object): A parameter object containing the necessary attributes:
+            - delta (float): Delta value to be varied.
+            - K (int): Number of shock scenarios.
+
+    Returns:
+        float: The optimal value of delta.
+    
+    """
+
     # create delta values and initialise H_values
     delta_values = np.linspace(0.0, 1.0, num=1000)
     H_values = []
@@ -183,6 +251,7 @@ def optimal_delta(par):
     plt.grid(True)
     plt.legend()
     plt.show()
+
 
 
 
