@@ -9,6 +9,8 @@ from types import SimpleNamespace
 from types import SimpleNamespace
 import matplotlib.gridspec as gridspec
 
+
+
 class q1:
     
     def __init__(self,tau):
