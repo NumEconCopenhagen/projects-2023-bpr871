@@ -156,7 +156,7 @@ def calculate_h(par, k_values, l_values, t_values):
 
 #sigma_epsilon=0.1, kappa_init=1, eta=0.5, w=1.0, rho=0.9, iota=0.01, r=0.01, T=120
 
-def calculate_H(par):
+def calculate_H(par, doprint=True, doplot = False):
 
     """
     Calculates the mean value of h over different shock scenarios.
@@ -172,6 +172,8 @@ def calculate_H(par):
             - r (float): Discount factor used in the calculation.
             - delta (float): Delta value used in the calculation.
             - K (int): Number of shock scenarios.
+        doprint (Bool): Indicates whether to print.
+        doplot (Bool): Indicates whether to plot. 
 
     Returns:
         tuple: A tuple containing the mean value of h (H) and a list of cumulative means for plotting.
@@ -188,23 +190,34 @@ def calculate_H(par):
 
     # create empty h_values list
     h_sum = []
-    mean_list = []
+    H_cum = []
 
     # looping over each shock scenario and finding the return for each series of kappa
     for k in K_list:
         kappa_values = kappas(par)
-        l_values_test = calculate_l(par, kappa_values)
-        h_value_temp = calculate_h(par, kappa_values, l_values_test, t_values)
+        l_values = calculate_l(par, kappa_values)
+        h_value_temp = calculate_h(par, kappa_values, l_values, t_values)
         h_sum.append(h_value_temp)
 
         # creating a list of cumulative means for plotting
         mean_until_now = np.mean(h_sum)
-        mean_list.append(mean_until_now)
+        H_cum.append(mean_until_now)
 
     H = np.mean(h_sum)
-    print(f'H is = {H} for K = {K}')
 
-    return H, mean_list
+    if doprint:
+       print(f'The ex ante expected value of the salon is {H}')
+
+    if doplot:
+        plt.plot(H_cum)
+        plt.axhline(H, color='r', linestyle='--', label='Level of convergence')
+        plt.xlabel('K')
+        plt.ylabel('Ex ante value, i.e. H')
+        plt.title('Ex ante expected value when increasing K in random shock series')
+        plt.legend()
+        plt.show()
+
+    return H, H_cum    # saved in case we want to return again
         
 
 def optimal_delta(par):
@@ -227,13 +240,13 @@ def optimal_delta(par):
     H_values = []
 
     # create a copy of the par namespace and set K to 10 for speed
-    par_copy = copy.copy(par)
-    par_copy.K = 10
+    #par_copy = copy.copy(par)
+    #par_copy.K = 10
 
     # loop over the delta values
     for delta in delta_values:
-        par_copy.delta = delta
-        H, _ = calculate_H(par_copy)
+        par.delta = delta
+        H, _ = calculate_H(par, doprint=False)
         H_values.append(H)
     
     # find the maximum H value and the corresponding delta value
