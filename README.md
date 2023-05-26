@@ -15,3 +15,6 @@ We explore the environment of imperfect competition drawing on different version
     - *Bertrand Model:*    Firms compete on price-setting strategies 
     - *Cournot Model:*     Firms compete on the quantity they get to supply in the market
     - *Stackelberg Model:* This model expands the Cournot Model in relaxing the assumption that firms act simultaneously in a static environment. Using this model we prove that the firm acting first are in an advantagous position compared to the firm acting subsequently. 
+
+3. ***Exam project*** \
+Project for exam hand-in
