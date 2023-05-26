@@ -12,11 +12,29 @@ from matplotlib import cm
 from mpl_toolkits.mplot3d import Axes3D
 
 
-
 def griewank(x):
+    """
+    Computes the Griewank function value for the given input vector x.
+
+    Args:
+        x (array-like): Input vector of length 2.
+
+    Returns:
+        float: The computed Griewank function value.
+    """
     return griewank_(x[0],x[1])
     
 def griewank_(x1,x2):
+    """
+    Computes the Griewank function value for the given input coordinates.
+
+    Args:
+        x1 (float): The first coordinate value.
+        x2 (float): The second coordinate value.
+
+    Returns:
+        float: The computed Griewank function value.
+    """
     A = x1**2/4000 + x2**2/4000
     B = np.cos(x1/np.sqrt(1))*np.cos(x2/np.sqrt(2))
     return A-B+1
