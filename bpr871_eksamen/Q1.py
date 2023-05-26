@@ -12,6 +12,14 @@ import matplotlib.gridspec as gridspec
 
 class q1:
     def __init__(self, tau):
+
+        """
+        Initializes the q1 class with the specified tau value.
+        
+        Args:
+            tau (float): The tau value.
+        """
+
         self.par = SimpleNamespace()
         self.par.a0 = 0.5
         self.par.alpha = 0.5
@@ -36,12 +44,17 @@ class q1:
 
 
     def calculate_objective_cobbdoug(self, tau):
-        """
-
-            This code calculates and returns utility using the expressions for L and G. 
-            The code snippet involves a way of detecting any RunTimeErrors. 
 
         """
+        Calculates and returns the utility using the expressions for L and G.
+        
+        Args:
+            tau (float): The tau value.
+        
+        Returns:
+            float: The utility value.
+        """
+
         L_expr = (-self.par.kappa * self.par.nu + np.sqrt(self.par.nu * (4 * self.par.alpha * self.par.w**2 * (1 - tau)**2 + self.par.kappa**2 * self.par.nu))) / (2 * self.par.nu * self.par.w * (1 - tau) + 1e-08)
         G_expr = tau * (-self.par.kappa * self.par.nu + np.sqrt(self.par.nu * (4 * self.par.alpha * self.par.w**2 * (1 - tau)**2 + self.par.kappa**2 * self.par.nu))) / (2 * self.par.nu * (1 - tau) + 1e-08)
 
@@ -56,6 +69,11 @@ class q1:
         return -V
 
     def optimize_tau_and_print_cobbdoug(self):
+
+        """
+        Optimizes tau and prints the optimal tau and worker utility at the socially optimal tax rate.
+        """
+
         bounds = [(0, 1)]
         x0 = 0.9
 
@@ -68,6 +86,9 @@ class q1:
         print(f"Worker utility at the socially optimal tax rate is: {round(objective_value, 2)}")
 
     def illustrate_optimal_tau_cobbdoug(self):
+        """
+        Illustrates the optimal tau for the Cobb-Douglas utility function.
+        """
         if self.optimal_tau is None:
             print("Optimal tau is not available. Please run optimize_tau_and_print first.")
             return
@@ -96,10 +117,15 @@ class q1:
     def calculate_objective_ces(self,x,par,var):
 
         """
-
-            This code calculates and returns utility using the expressions for L and G. 
-            The code snippet involves a way of detecting any RunTimeErrors. 
-
+        Calculates and returns the utility using the CES (Constant Elasticity of Substitution) function.
+        
+        Args:
+            x (list): List containing the values of the endogenous variables.
+            par (str): Parameter set ('par1' or 'par2').
+            var (str): Endogenous variable ('L' or 'L_tau').
+        
+        Returns:
+            float: The utility value.
         """
     
         # Modifying parameters to fit Set1 or Set2
@@ -137,12 +163,15 @@ class q1:
         return -utility + disutility
 
     def optimize_and_print_ces(self,par,var):
-        """
-
-            This code calculates and returns utility using the expressions for L and G. 
-            The code snippet involves a way of detecting any RunTimeErrors. 
 
         """
+        Optimizes the endogenous variable and prints the optimal values and the corresponding objective function value.
+        
+        Args:
+            par (str): Parameter set ('par1' or 'par2').
+            var (str): Endogenous variable ('L' or 'L_tau').
+        """
+
         # Modifying parameters to fit Set1 or Set2
         if par == 'par1':
             params = self.par1
@@ -199,6 +228,15 @@ class q1:
         print(f"Optimal G: {round(G, 2)}")
 
     def illustrate_optimal_ces(self, par, var):
+
+        """
+        Illustrates the optimal values for the CES function.
+        
+        Args:
+            par (str): Parameter set ('par1' or 'par2').
+            var (str): Endogenous variable ('L' or 'L_tau').
+        """
+
         # Modifying parameters to fit Set1 or Set2
         if par == 'par1':
             params = self.par1
@@ -246,74 +284,3 @@ class q1:
 
         # Display the plots
         plt.show()
-
-
-    # def illustrate_optimal_ces(self, par, var):
-    #     # Modifying parameters to fit Set1 or Set2
-    #     if par == 'par1':
-    #         params = self.par1
-    #     elif par == 'par2':
-    #         params = self.par2
-    #     else:
-    #         raise ValueError("Invalid parameter set specified.")
-
-    #     # Generate a range of L values
-    #     L_values = np.linspace(1e-08, 24-1e-08, 100)
-
-    #     # Calculate the utility values for each L
-    #     utility_values = [-self.calculate_objective_ces([L, params.w, params.tau], par, var) for L in L_values]
-
-    #     # Calculate the corresponding G values for each L
-    #     G_values = [params.tau * params.w * L for L in L_values]
-
-    #     # Plot utility against L
-    #     plt.subplot(1, 2, 1)
-    #     plt.plot(L_values, utility_values)
-    #     plt.xlabel('L')
-    #     plt.ylabel('Utility')
-    #     plt.title('Utility for different labor hours')
-    #     plt.grid(True)
-
-    #     # Plot G against L
-    #     plt.subplot(1, 2, 2)
-    #     plt.plot(L_values, G_values)
-    #     plt.xlabel('L')
-    #     plt.ylabel('G')
-    #     plt.title('Government Spending for different labor hours')
-    #     plt.grid(True)
-
-    #     # Adjust the spacing between subplots
-    #     plt.subplots_adjust(wspace=0.4)
-
-    #     # Adjust the layout and display the plots
-    #     plt.tight_layout()
-    #     plt.show()
-
-
-    # def illustrate_optimal_ces(self, par, var):
-    #     # Modifying parameters to fit Set1 or Set2
-    #     if par == 'par1':
-    #         params = self.par1
-    #     elif par == 'par2':
-    #         params = self.par2
-    #     else:
-    #         raise ValueError("Invalid parameter set specified.")
-
-    #     # Generate a range of L values
-    #     L_values = np.linspace(1e-08, 24-1e-08, 100)
-
-    #     # Calculate the utility values for each L
-    #     utility_values = [-self.calculate_objective_ces([L, params.w, params.tau], par, var) for L in L_values]
-
-    #     # Plot utility against L
-    #     plt.plot(L_values, utility_values)
-    #     plt.xlabel('L')
-    #     plt.ylabel('Utility')
-    #     plt.title('Utility for different labor hours')
-    #     plt.grid(True)
-
-    #     # Display the plot
-    #     plt.show()
-
-
-
