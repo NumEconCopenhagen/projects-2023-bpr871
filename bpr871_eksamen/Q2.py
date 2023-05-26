@@ -1,6 +1,7 @@
 import numpy as np
 from types import SimpleNamespace
 from scipy import optimize
+import copy
 
 
 import matplotlib.pyplot as plt
@@ -100,17 +101,12 @@ def calculate_h(par, k_values, l_values, t_values):
 
 #, sigma_epsilon=0.1, kappa_init=1, eta=0.5, w=1.0, rho=0.9, iota=0.01, r=0.01, T=120
 
-def calculate_H(K, par):
+def calculate_H(par):
 
-
-    par.eta = 0.5
-    par.w = 1.0
-    par.rho = 0.9
-    par.iota = 0.01
-    r = par.r = 0.01
+    # unpacking the T parameter and creating lists
     T = par.T
-
     t_values = list(range(T))
+    K = par.K
     K_list = range(K)
 
     # create empty h_values list
@@ -134,6 +130,43 @@ def calculate_H(K, par):
 
     #return mean_list
 
-    return H
+    #H, H_cum = calculate_H(K, par)
+
+    return H, mean_list
         
+
+def optimal_delta(par):
+
+    # create delta values and initialise H_values
+    delta_values = np.linspace(0.0, 1.0, num=1000)
+    H_values = []
+
+    # create a copy of the par namespace 
+    par_copy = copy.copy(par)
+
+    # loop over the delta values
+    for delta in delta_values:
+        par_copy.delta = delta
+        H, _ = calculate_H(par_copy)
+        H_values.append(H)
+    
+    # find the maximum H value and the corresponding delta value
+    max_index = np.argmax(H_values)
+    max_delta = delta_values[max_index]
+    max_H = H_values[max_index]
+
+    # Plot delta against H
+    plt.plot(delta_values, H_values)
+    plt.scatter(max_delta, max_H, color='red', label=f'Max H = {max_H:.3f}')
+    plt.axvline(x=max_delta, color='red', linestyle='--', label=f'Delta = {max_delta:.3f}')
+    plt.xlabel('$\Delta$')
+    plt.ylabel('h')
+    plt.title('Ex post value of salon, h($\epsilon_0,\epsilon_1,...,\epsilon_{119}$), given values of $\Delta$')
+    plt.grid(True)
+    plt.legend()
+    plt.show()
+    
+
+    #return delta_values, H_values
+
 
